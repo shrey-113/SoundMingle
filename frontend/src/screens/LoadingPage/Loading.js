@@ -14,20 +14,25 @@ function Loading() {
 
     t2.staggerFrom(
       heroText.querySelectorAll(".letter"),
-      1.5,
+      2,
       { opacity: 0, ease: "power4.inOut" },
       0.15,
       0.2
     );
 
     const tl = gsap.timeline();
-    tl.to(loadingRef.current.children[1], { x: 0, duration: 0.8 })
-      .to(loadingRef.current.children[3], { x: 0, duration: 0.8 }, "-=0.8")
-      .to(loadingRef.current.children[0], { x: 0, duration: 0.8 }, "-=0.8")
-      .to(loadingRef.current.children[4], { x: 0, duration: 0.8 }, "-=0.8");
+    tl.to(loadingRef.current.children[1], { x: 0, duration: 1.5 })
+      .to(loadingRef.current.children[3], { x: 0, duration: 1.5 }, "-=1.5")
+      .to(loadingRef.current.children[0], { x: 0, duration: 1.5 }, "-=1.5")
+      .to(loadingRef.current.children[4], { x: 0, duration: 1.5 }, "-=1.5");
 
-    t2.play();
-    tl.play();
+    const hasAnimationPlayed = localStorage.getItem("animationPlayed");
+
+    if (!hasAnimationPlayed) {
+      t2.play();
+      tl.play();
+      localStorage.setItem("animationPlayed", true);
+    }
   }, []);
 
   return (
