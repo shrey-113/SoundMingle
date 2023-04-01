@@ -4,8 +4,22 @@ import Sidebar from '../../components/sidebar'
 import './home.css'
 import Duo from '../duo/index'
 import Group from '../group/index'
+import { useState,useEffect } from 'react'
+import Loading from "../LoadingPage/Loading"
 
 function Home() {
+    const [load, setLoading] = useState(true);
+
+    useEffect(() => {
+      // Simulate loading time
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    }, []);
+  
+    if (load) {
+      return <Loading />;
+    }
     return (
         <div className="main-body">
         <Router>
