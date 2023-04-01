@@ -15,7 +15,7 @@ function Sidebar() {
 
             <div className="sidebar-buttons">
                 <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill/>}/>
-                <SidebarButton title="Home" to="/" icon={<AiFillHome/>}/>
+                <SidebarButton title="Home" to="/home" icon={<AiFillHome/>}/>
                 <SidebarButton title="Group" to="/group" icon={<IoIosPeople/>}/>
             </div>  
 
