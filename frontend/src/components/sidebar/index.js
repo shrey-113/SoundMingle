@@ -7,11 +7,16 @@ import { AiFillHome } from 'react-icons/ai'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { IoIosPeople } from 'react-icons/io'
 import { FaSignOutAlt } from 'react-icons/fa'
+import { useStateProvider } from '../../utils/StateProvider'
+
+
 
 function Sidebar() {
+    const [{ userInfo }] = useStateProvider();
+
     return (
         <div className="sidebar-container">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="profile pic" className="profile-pic" />
+            <img src={userInfo?.image} style={{ width: "60px", height: "60px"}} alt="profile pic" className="profile-pic" />
 
             <div className="sidebar-buttons">
                 <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill/>}/>
