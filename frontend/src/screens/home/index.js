@@ -5,11 +5,42 @@ import Duo from '../duo/index';
 import Group from '../group/index';
 import { useState, useEffect } from 'react';
 import Loading from '../LoadingPage/Loading';
-import LoginPage from '../Login/LoginPage';
+// import LoginPage from '../Login/LoginPage';
 import Homepage from './homepage';
+import axios from 'axios'
+import { useStateProvider } from '../../utils/StateProvider'
+import { reducerCases } from '../../utils/Constants'
+
+
 
 function Home() {
   const [showLoading, setShowLoading] = useState(true);
+
+  const [{ token }, dispatch] = useStateProvider();
+
+  // console.log(token);
+
+  useEffect(() => {
+      const getUserInfo = async () => {
+        const { data } = await axios.get("https://api.spotify.com/v1/me", {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        });
+        console.log({data})
+        const userInfo = {
+          userId: data.id,
+          userName: data.display_name,
+          image: data.images[0].url,
+        };
+        dispatch({ type: reducerCases.SET_USER, userInfo });
+        // console.log(userInfo);
+  
+      };
+      getUserInfo();
+    }, [dispatch, token]);
+
 
   useEffect(() => {
     // Check if the animation has already been played
@@ -33,7 +64,7 @@ function Home() {
         <Router>
           <Sidebar />
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            {/* <Route path="/" element={<LoginPage />} /> */}
             <Route path="/home" element={<Homepage />} />
             <Route path="/duo" element={<Duo />} />
             <Route path="/group" element={<Group />} />
