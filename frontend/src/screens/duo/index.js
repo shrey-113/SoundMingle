@@ -6,9 +6,13 @@ import { useStateProvider } from "../../utils/StateProvider";
 function Duo() {
 
 
-  const SearchResultCard = ({ songName, artistNames, imageUrl }) => {
+
+  const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
     return (
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+        onClick={onClick}
+      >
         <img
           src={imageUrl}
           style={{ width: "100px", height: "100px", marginRight: "16px" }}
@@ -31,13 +35,18 @@ function Duo() {
     );
   };
 
-  
-
   const [{ token }, dispatch] = useStateProvider();
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  useEffect((e)=>{
+    // e.preventDefault()
+
+
+  })
+
   useEffect(() => {
+    
     const searchTracks = async () => {
       if (searchValue === "") return;
       setSearchResults([]);
@@ -69,10 +78,15 @@ function Duo() {
     searchTracks();
   }, [searchValue, token, dispatch]);
 
+  
+
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
+    setSearchResults([]);
+
   };
 
+ 
   return (
     <div
       className="bg-black flex flex-col justify-center items-center h-screen"
@@ -109,21 +123,20 @@ function Duo() {
           onChange={handleSearch}
         />
 
-        {searchValue && (
-          <div className="search__results">
-            {searchResults
-              .sort((a, b) => a.songName.localeCompare(b.songName))
-              .slice(0, 5)
-              .map((result, index) => (
-                <SearchResultCard
-                  key={result.id || index}
-                  songName={result.songName}
-                  artistNames={result.artistNames}
-                  imageUrl={result.imageUrl}
-                />
-              ))}
-          </div>
-        )}
+{searchValue !== "" &&
+  searchResults
+  .sort((a, b) => a.songName.localeCompare(b.songName))
+  .slice(0, 5)
+  .map((result, index) => (
+    <SearchResultCard
+      key={result.id || index}
+      songName={result.songName}
+      artistNames={result.artistNames}
+      imageUrl={result.imageUrl}
+      onClick={() => setSearchValue(result.songName)
+      }
+    />
+  ))}
       </div>
       <button
         type="match"
