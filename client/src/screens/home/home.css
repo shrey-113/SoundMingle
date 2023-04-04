@@ -1,0 +1,9 @@
+.main-body{
+    height: 100vh;
+    width: 100vw;
+    /* background-image: linear-gradient(to bottom, #C2ADAD, #000B24); */
+    background: black;
+    border-radius: 30px;
+    display: flex;
+    overflow: hidden;
+}
