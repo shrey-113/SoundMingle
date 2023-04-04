@@ -39,11 +39,7 @@ function Duo() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  useEffect((e)=>{
-    // e.preventDefault()
 
-
-  })
 
   useEffect(() => {
     
@@ -78,7 +74,7 @@ function Duo() {
     searchTracks();
   }, [searchValue, token, dispatch]);
 
-  
+
 
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
