@@ -75,7 +75,7 @@ function Home() {
           <Sidebar />
           <Routes>
             {/* <Route path="/" element={<LoginPage />} /> */}
-            <Route path="/" element={<Homepage />} />
+            <Route path="/home" element={<Homepage />} />
             <Route path="/duo" element={<Duo />} />
             <Route path="/group" element={<Group />} />
           </Routes>

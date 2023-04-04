@@ -1,13 +1,43 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import { useState } from 'react';
 import "./home.css"
 import sm from "./2.png"
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import img1 from "./500x500.jpg"
-import img2 from "./500x500 (1).jpg"
-import img3 from "./size_l.jpg"
+
+
+import axios from 'axios';
+import { useStateProvider } from '../../utils/StateProvider';
 
 function Homepage() {
+
+
+  const [{ token }, dispatch] = useStateProvider();
+  const [playlistImages, setPlaylistImages] = useState([]);
+
+  useEffect(() => {
+    const getPlaylistpic = async () => {
+      const response = await axios.get("https://api.spotify.com/v1/me/playlists", {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const playlists = response.data.items;
+      console.log(`Number of playlists: ${playlists.length}`);
+
+      const images = playlists.map((playlist) => {
+        return playlist.images[0].url;
+      });
+
+      setPlaylistImages(images);
+    };
+    getPlaylistpic();
+  }, [dispatch, token]);
+  
+
+
   return (
     <>
       <div className='grid grid-cols-2'>
@@ -21,16 +51,12 @@ function Homepage() {
         <div className='flex flex-col items-center justify-center'>
           <h1 className='text-white text-2xl py-4'>Your Playlist</h1>
           <div className='bg-white w-80 h-80'>
-            <Carousel showStatus={false} showIndicators={false}  showThumbs={false}swipeable={true} infiniteLoop={true}>
-              <div>
-                <img src={img1} alt="img1" className="cc-img" />
-              </div>
-              <div>
-                <img src={img2} alt="img2" className="cc-img" />
-              </div>
-              <div>
-                <img src={img3} alt="img3" className="cc-img" />
-              </div>
+            <Carousel showStatus={false} showIndicators={false}  showThumbs={false}swipeable={true} infiniteLoop={true}  autoPlay={true} interval={3000}>
+              {playlistImages.map((image, index) => (
+                <div key={index}>
+                  <img src={image} alt={`Playlist ${index + 1}`} className="cc-img" />
+                </div>
+              ))}
             </Carousel>
           </div>
         </div>
