@@ -16,7 +16,11 @@ function Sidebar() {
 
     return (
         <div className="sidebar-container">
-            <img src={userInfo?.image} style={{ width: "60px", height: "60px"}} alt="profile pic" className="profile-pic" />
+            <div className='profile'>
+                <img src={userInfo?.image}  alt="profile pic" className="profile-pic" />
+                <h4 className="username">{userInfo?.userName}</h4>
+            </div>
+      
 
             <div className="sidebar-buttons">
                 <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill/>}/>

@@ -67,6 +67,8 @@ function Home() {
   if (load) {
     return <Loading />;
   }
+  
+
   return (
     <div className="main-body">
         <Router>

@@ -26,7 +26,7 @@ function Loading() {
       .to(loadingRef.current.children[0], { x: 0, duration: 1.5 }, "-=1.5")
       .to(loadingRef.current.children[4], { x: 0, duration: 1.5 }, "-=1.5");
 
-    // t2.play();
+    t2.play();
     tl.play();
   }, []);
 
