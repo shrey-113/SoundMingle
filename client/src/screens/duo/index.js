@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
+import "./duo.css"
 
 function Duo() {
-
-
-
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
     return (
       <div
@@ -39,15 +37,12 @@ function Duo() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-
-
   useEffect(() => {
-    
     const searchTracks = async () => {
       if (searchValue === "") return;
       setSearchResults([]);
-      let offset = searchValue.charCodeAt(0) % 5;
-      for (let i = 0; i < 5; i++) {
+      let offset = searchValue.charCodeAt(0) % 10;
+      for (let i = 0; i < 10; i++) {
         const response = await axios.get(
           `https://api.spotify.com/v1/search?q=${searchValue}&type=track&limit=1&offset=${offset}`,
           {
@@ -58,6 +53,7 @@ function Duo() {
           }
         );
         const item = response.data.tracks.items[0];
+        console.log(item)
         if (!item) break;
         const songName = item.name;
         const artistNames = item.artists
@@ -68,35 +64,34 @@ function Duo() {
           ...prevResults,
           { songName, artistNames, imageUrl },
         ]);
-        offset = (offset + 1) % 5;
+        offset = (offset + 1) % 10;
       }
     };
     searchTracks();
   }, [searchValue, token, dispatch]);
 
-
-
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
     setSearchResults([]);
-
   };
 
- 
   return (
     <div
       className="bg-black flex flex-col justify-center items-center h-screen"
       style={{
         transform: "translate(-50%, -50%)",
         position: "absolute",
-        top: "50%",
+        top: "47%",
         left: "50%",
       }}
     >
       <h1 className="text-white text-4xl text-center whitespace-nowrap mb-8">
         Select a song to recommend
       </h1>
-      <div className="relative">
+      <div
+        className="relative"
+        style={{ height: "464px", width: "454px", overflow: "hidden" }}
+      >
         <svg
           className="absolute top-0 left-0 mt-2 ml-2 w-6 h-6 text-gray-600"
           xmlns="http://www.w3.org/2000/svg"
@@ -117,22 +112,23 @@ function Duo() {
           className="w-80 pl-10 mb-4 rounded-md border border-gray-300 p-2 text-gray-800 focus:outline-none focus:border-green-500"
           value={searchValue}
           onChange={handleSearch}
+          style={{ width: "454px" }}
         />
-
-{searchValue !== "" &&
-  searchResults
-  .sort((a, b) => a.songName.localeCompare(b.songName))
-  .slice(0, 5)
-  .map((result, index) => (
-    <SearchResultCard
-      key={result.id || index}
-      songName={result.songName}
-      artistNames={result.artistNames}
-      imageUrl={result.imageUrl}
-      onClick={() => setSearchValue(result.songName)
-      }
-    />
-  ))}
+        <div style={{ overflowY: "scroll", height: "376px" }}>
+          {searchValue !== "" &&
+            searchResults
+              .sort((a, b) => a.songName.localeCompare(b.songName))
+              .slice(0, 10)
+              .map((result, index) => (
+                <SearchResultCard
+                  key={result.id || index}
+                  songName={result.songName}
+                  artistNames={result.artistNames}
+                  imageUrl={result.imageUrl}
+                  onClick={() => setSearchValue(result.songName)}
+                />
+              ))}
+        </div>
       </div>
       <button
         type="match"
