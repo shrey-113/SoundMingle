@@ -5,7 +5,7 @@ import Duo from '../duo/index';
 import Group from '../group/index';
 import { useState, useEffect } from 'react';
 import Loading from '../LoadingPage/Loading';
-// import LoginPage from '../Login/LoginPage';
+import LoginPage from '../Login/LoginPage';
 import Homepage from './homepage';
 import axios from 'axios'
 import { useStateProvider } from '../../utils/StateProvider'
@@ -43,19 +43,19 @@ function Home() {
     }, [dispatch, token]);
 
 
-  // useEffect(() => {
-  //   // Check if the animation has already been played
-  //   const hasAnimationPlayed = localStorage.getItem('hasAnimationPlayed');
-  //   if (hasAnimationPlayed) {
-  //     setLoading(false);
-  //   } else {
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //       // Persist that the animation has already been played
-  //       localStorage.setItem('hasAnimationPlayed', true);
-  //     }, 3000);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Check if the animation has already been played
+    const hasAnimationPlayed = localStorage.getItem('hasAnimationPlayed');
+    if (hasAnimationPlayed) {
+      setLoading(false);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+        // Persist that the animation has already been played
+        localStorage.setItem('hasAnimationPlayed', true);
+      }, 3000);
+    }
+  }, []);
 
   useEffect(() => {
     // Simulate loading time
@@ -74,7 +74,7 @@ function Home() {
         <Router>
           <Sidebar />
           <Routes>
-            {/* <Route path="/" element={<LoginPage />} /> */}
+            <Route path="/" element={<LoginPage />} />
             <Route path="/home" element={<Homepage />} />
             <Route path="/duo" element={<Duo />} />
             <Route path="/group" element={<Group />} />

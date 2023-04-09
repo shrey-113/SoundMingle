@@ -7,6 +7,8 @@ import "./duo.css"
 function Duo() {
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
     return (
+
+      
       <div
         style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
         onClick={onClick}
@@ -36,10 +38,11 @@ function Duo() {
   const [{ token }, dispatch] = useStateProvider();
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [songSelected, setSongSelected] = useState(false);
 
   useEffect(() => {
     const searchTracks = async () => {
-      if (searchValue === "") return;
+      if (searchValue === "" || songSelected) return;
       setSearchResults([]);
       let offset = searchValue.charCodeAt(0) % 10;
       for (let i = 0; i < 10; i++) {
@@ -53,7 +56,6 @@ function Duo() {
           }
         );
         const item = response.data.tracks.items[0];
-        console.log(item)
         if (!item) break;
         const songName = item.name;
         const artistNames = item.artists
@@ -65,14 +67,21 @@ function Duo() {
           { songName, artistNames, imageUrl },
         ]);
         offset = (offset + 1) % 10;
+        await new Promise(resolve => setTimeout(resolve, 500)); 
       }
     };
     searchTracks();
-  }, [searchValue, token, dispatch]);
+  }, [searchValue, token, dispatch, songSelected]);
 
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
     setSearchResults([]);
+    setSongSelected(false);
+  };
+
+  const handleSongSelect = (songName) => {
+    setSearchValue(songName);
+    setSongSelected(true);
   };
 
   return (
@@ -115,6 +124,8 @@ function Duo() {
           style={{ width: "454px" }}
         />
         <div style={{ overflowY: "scroll", height: "376px" }}>
+
+
           {searchValue !== "" &&
             searchResults
               .sort((a, b) => a.songName.localeCompare(b.songName))
@@ -125,9 +136,14 @@ function Duo() {
                   songName={result.songName}
                   artistNames={result.artistNames}
                   imageUrl={result.imageUrl}
-                  onClick={() => setSearchValue(result.songName)}
+                  onClick={() => {
+                   
+                    handleSongSelect(result.songName)
+                  }}
                 />
               ))}
+
+              
         </div>
       </div>
       <button
