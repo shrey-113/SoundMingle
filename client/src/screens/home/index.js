@@ -7,9 +7,11 @@ import { useState, useEffect } from 'react';
 import Loading from '../LoadingPage/Loading';
 import LoginPage from '../Login/LoginPage';
 import Homepage from './homepage';
-import axios from 'axios'
+import axios from 'axios';
 import { useStateProvider } from '../../utils/StateProvider'
-import { reducerCases } from '../../utils/Constants'
+import { reducerCases } from '../../utils/Constants';
+
+import NotFoundPage from '../404/NotFoundPage';
 
 
 
@@ -29,18 +31,22 @@ function Home() {
             "Content-Type": "application/json",
           },
         });
-        console.log({data})
+        // console.log({data})
         const userInfo = {
           userId: data.id,
           userName: data.display_name,
           image: data.images[0].url,
         };
+
+        console.log({data})
         dispatch({ type: reducerCases.SET_USER, userInfo });
-        // console.log(userInfo);
+        console.log(userInfo);
   
       };
       getUserInfo();
     }, [dispatch, token]);
+
+
 
 
   useEffect(() => {
@@ -72,12 +78,15 @@ function Home() {
   return (
     <div className="main-body">
         <Router>
+       
           <Sidebar />
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/home" element={<Homepage />} />
             <Route path="/duo" element={<Duo />} />
             <Route path="/group" element={<Group />} />
+            <Route path="*" element={<NotFoundPage />} />
+          
           </Routes>
         </Router>
     </div>

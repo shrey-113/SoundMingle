@@ -10,6 +10,7 @@ export default function LoginPage() {
     window.location.href=`${Spotify.apiUrl}?client_id=${Spotify.clientId}&redirect_uri=${Spotify.redirectUrl}&scope=${Spotify.scope.join(" ")}&response_type=token&show_daialog=true`;
   };
 
+  
   return (
   
      

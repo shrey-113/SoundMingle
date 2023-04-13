@@ -26,7 +26,6 @@ function Loadingcount() {
   }, [counter]);
 
   return (
-    
       <div className="absolute bg-black z-10 w-full h-full flex flex-col justify-center items-center">
         <div className='flex justify-center items-center'>
           <div className="flex flex-col items-center">

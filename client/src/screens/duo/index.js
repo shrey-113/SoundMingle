@@ -5,7 +5,6 @@ import { useStateProvider } from "../../utils/StateProvider";
 import "./duo.css"
 import BridgeLoad from "./BridgeLoad";
 
-
 function Duo() {
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
     return (
@@ -41,7 +40,6 @@ function Duo() {
   const [songSelected, setSongSelected] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     const searchTracks = async () => {
       if (searchValue === "" || songSelected) return;
@@ -58,15 +56,20 @@ function Duo() {
           }
         );
         const item = response.data.tracks.items[0];
+
+
         if (!item) break;
         const songName = item.name;
         const artistNames = item.artists
           .map((artist) => artist.name)
           .join(", ");
         const imageUrl = item.album.images[0].url;
+
+        const TrackUri = item.uri
+        // console.log(TrackUri)
         setSearchResults((prevResults) => [
           ...prevResults,
-          { songName, artistNames, imageUrl },
+          { songName, artistNames, imageUrl, TrackUri },
         ]);
         offset = (offset + 1) % 10;
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -81,7 +84,7 @@ function Duo() {
     setSongSelected(false);
   };
 
-  const handleSongSelect = (songName) => {
+  const handleSongSelect = (songName, TrackUri) => {
     setSearchValue(songName);
     setSongSelected(true);
   };
@@ -89,89 +92,87 @@ function Duo() {
   const handleClick = () => {
     if (!songSelected) {
       return;
-      
+
     }
     setLoading(true);
   };
 
+
   return (
-    <>
+  <>
+    <div
+      className="bg-black flex flex-col justify-center items-center h-screen relative"
+      style={{
+        transform: "translate(-50%, -50%)",
+        position: "absolute",
+        top: "47%",
+        left: "50%",
+      }}
+    >
+      <h1 className="text-white text-4xl text-center whitespace-nowrap mb-8">
+        Select a song to recommend
+      </h1>
       <div
-        className="bg-black flex flex-col justify-center items-center h-screen relative"
-        style={{
-          transform: "translate(-50%, -50%)",
-          position: "absolute",
-          top: "47%",
-          left: "50%",
-        }}
+        className="relative"
+        style={{ height: "464px", width: "454px", overflow: "hidden" }}
       >
-        <h1 className="text-white text-4xl text-center whitespace-nowrap mb-8">
-          Select a song to recommend
-        </h1>
-        <div
-          className="relative"
-          style={{ height: "464px", width: "454px", overflow: "hidden" }}
+        <svg
+          className="absolute top-0 left-0 mt-2 ml-2 w-6 h-6 text-gray-600"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <svg
-            className="absolute top-0 left-0 mt-2 ml-2 w-6 h-6 text-gray-600"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input
-            type="text"
-            placeholder="Songs"
-            required
-            className="w-80 pl-10 mb-4 rounded-md border border-gray-300 p-2 text-gray-800 focus:outline-none focus:border-green-500"
-            value={searchValue}
-            onChange={handleSearch}
-            style={{ width: "454px" }}
-          />
-          <div style={{ overflowY: "scroll", height: "376px" }}>
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          placeholder="Songs"
+          required
+          className="w-80 pl-10 mb-4 rounded-md border border-gray-300 p-2 text-gray-800 focus:outline-none focus:border-green-500"
+          value={searchValue}
+          onChange={handleSearch}
+          style={{ width: "454px" }}
+        />
+        <div style={{ overflowY: "scroll", height: "376px" }}>
+          {searchValue !== "" &&
+            searchResults
+              .sort((a, b) => a.songName.localeCompare(b.songName))
+              .slice(0, 10)
+              .map((result, index) => (
+                <SearchResultCard
+                  key={result.id || index}
+                  songName={result.songName}
+                  artistNames={result.artistNames}
+                  imageUrl={result.imageUrl}
+                  onClick={() => {
 
-
-            {searchValue !== "" &&
-              searchResults
-                .sort((a, b) => a.songName.localeCompare(b.songName))
-                .slice(0, 10)
-                .map((result, index) => (
-                  <SearchResultCard
-                    key={result.id || index}
-                    songName={result.songName}
-                    artistNames={result.artistNames}
-                    imageUrl={result.imageUrl}
-                    onClick={() => {
-
-                      handleSongSelect(result.songName)
-                    }}
-                  />
-                ))}
-
-
-          </div>
+                    handleSongSelect(result.songName)
+                  }}
+                />
+              ))}
         </div>
-        <button
-          type="match"
-          onClick={handleClick}
-          disabled={!songSelected}
-          className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
-        >
-          Match
-        </button>
-        {loading && (
-          <div className="w-full h-full absolute">
-            <BridgeLoad/>       
-          </div>
-        )}
       </div>
-    </>
+      <button
+        type="match"
+        onClick={handleClick}
+        disabled={!songSelected}
+        className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
+      >
+        Match
+      </button>
+      {loading && (
+        <div className="w-full h-full absolute">
+          <BridgeLoad />
+        </div>
+      )}
+    </div>
+  </>
+
   );
 }
 
