@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./duo.css"
+import Player from "./Player";
 
 function Duo() {
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
@@ -39,6 +40,7 @@ function Duo() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [songSelected, setSongSelected] = useState(false);
+  const [TrackUri, setTrackUri] = useState("");
 
   useEffect(() => {
     const searchTracks = async () => {
@@ -56,15 +58,20 @@ function Duo() {
           }
         );
         const item = response.data.tracks.items[0];
+     
+
         if (!item) break;
         const songName = item.name;
         const artistNames = item.artists
           .map((artist) => artist.name)
           .join(", ");
         const imageUrl = item.album.images[0].url;
+
+        const TrackUri=item.uri
+        // console.log(TrackUri)
         setSearchResults((prevResults) => [
           ...prevResults,
-          { songName, artistNames, imageUrl },
+          { songName, artistNames, imageUrl,TrackUri },
         ]);
         offset = (offset + 1) % 10;
         await new Promise(resolve => setTimeout(resolve, 500)); 
@@ -79,8 +86,11 @@ function Duo() {
     setSongSelected(false);
   };
 
-  const handleSongSelect = (songName) => {
+  const handleSongSelect = (songName,TrackUri) => {
+
     setSearchValue(songName);
+    setTrackUri(TrackUri);
+    
     setSongSelected(true);
   };
 
@@ -138,7 +148,7 @@ function Duo() {
                   imageUrl={result.imageUrl}
                   onClick={() => {
                    
-                    handleSongSelect(result.songName)
+                    handleSongSelect(result.songName,result.TrackUri)
                   }}
                 />
               ))}
@@ -149,9 +159,12 @@ function Duo() {
       <button
         type="match"
         className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
+    
       >
         Match
       </button>
+
+      <div><Player TrackUri={TrackUri} /></div>  
     </div>
   );
 }

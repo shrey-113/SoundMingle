@@ -10,7 +10,8 @@ const Spotify = {
       "user-read-currently-playing",
       "user-read-recently-played",
       "user-read-playback-position",
-      "user-top-read"
+      "user-top-read",
+      "streaming"
     ]
   };
   
