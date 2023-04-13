@@ -3,13 +3,11 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./duo.css"
-import Player from "./Player";
+import BridgeLoad from "./BridgeLoad";
 
 function Duo() {
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
     return (
-
-      
       <div
         style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
         onClick={onClick}
@@ -40,7 +38,7 @@ function Duo() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [songSelected, setSongSelected] = useState(false);
-  const [TrackUri, setTrackUri] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const searchTracks = async () => {
@@ -58,7 +56,7 @@ function Duo() {
           }
         );
         const item = response.data.tracks.items[0];
-     
+
 
         if (!item) break;
         const songName = item.name;
@@ -67,14 +65,14 @@ function Duo() {
           .join(", ");
         const imageUrl = item.album.images[0].url;
 
-        const TrackUri=item.uri
+        const TrackUri = item.uri
         // console.log(TrackUri)
         setSearchResults((prevResults) => [
           ...prevResults,
-          { songName, artistNames, imageUrl,TrackUri },
+          { songName, artistNames, imageUrl, TrackUri },
         ]);
         offset = (offset + 1) % 10;
-        await new Promise(resolve => setTimeout(resolve, 500)); 
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
     };
     searchTracks();
@@ -86,17 +84,24 @@ function Duo() {
     setSongSelected(false);
   };
 
-  const handleSongSelect = (songName,TrackUri) => {
-
+  const handleSongSelect = (songName, TrackUri) => {
     setSearchValue(songName);
-    setTrackUri(TrackUri);
-    
     setSongSelected(true);
   };
 
+  const handleClick = () => {
+    if (!songSelected) {
+      return;
+
+    }
+    setLoading(true);
+  };
+
+
   return (
+  <>
     <div
-      className="bg-black flex flex-col justify-center items-center h-screen"
+      className="bg-black flex flex-col justify-center items-center h-screen relative"
       style={{
         transform: "translate(-50%, -50%)",
         position: "absolute",
@@ -134,8 +139,6 @@ function Duo() {
           style={{ width: "454px" }}
         />
         <div style={{ overflowY: "scroll", height: "376px" }}>
-
-
           {searchValue !== "" &&
             searchResults
               .sort((a, b) => a.songName.localeCompare(b.songName))
@@ -147,25 +150,29 @@ function Duo() {
                   artistNames={result.artistNames}
                   imageUrl={result.imageUrl}
                   onClick={() => {
-                   
-                    handleSongSelect(result.songName,result.TrackUri)
+
+                    handleSongSelect(result.songName)
                   }}
                 />
               ))}
-
-              
         </div>
       </div>
       <button
         type="match"
+        onClick={handleClick}
+        disabled={!songSelected}
         className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
-    
       >
         Match
       </button>
-
-      <div><Player TrackUri={TrackUri} /></div>  
+      {loading && (
+        <div className="w-full h-full absolute">
+          <BridgeLoad />
+        </div>
+      )}
     </div>
+  </>
+
   );
 }
 

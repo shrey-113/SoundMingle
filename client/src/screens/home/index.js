@@ -19,7 +19,7 @@ function Home() {
 
   const [load, setLoading] = useState(true);
 
-  const [{ token }, dispatch] = useStateProvider();
+  const [{ token }, dispatch] = useStateProvider('0ffdd015548d4b369d66245e731baf50');
 
   // console.log(token);
 
