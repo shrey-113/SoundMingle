@@ -44,12 +44,14 @@ function Homepage() {
         return playlist.images[0].url;
       });
 
+      
+
 
       setPlaylistImages(images);
     };
     getPlaylistpic();
   }, [dispatch, token]);
-  
+
 
 
   return (
@@ -69,8 +71,8 @@ function Homepage() {
           <div className='bg-white w-80 h-80'>
             <Carousel showStatus={false} showIndicators={false}  showThumbs={false}swipeable={true} infiniteLoop={true}  autoPlay={true} interval={3000}>
               {playlistImages.map((image, index) => (
-                <div key={index}>
-                  <img src={image} alt={`Playlist ${index + 1}`} className="cc-img" />
+                <div  key={index}>
+                  <img  src={image} alt={`Playlist ${index + 1}`} className="cc-img" />
                 </div>
               ))}
             </Carousel>

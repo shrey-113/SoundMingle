@@ -23,13 +23,6 @@ const reducer =(state,action)=>{
             }
         }
 
-        case reducerCases.LOG_OUT: {
-            return {
-                ...state,
-                token: null,
-                userInfo: null,
-            }
-        }
 
         default:
             return state; 
