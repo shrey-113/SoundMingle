@@ -38,9 +38,9 @@ function Home() {
           image: data.images[0].url,
         };
 
-        console.log({data})
+        // console.log({data})
         dispatch({ type: reducerCases.SET_USER, userInfo });
-        console.log(userInfo);
+        // console.log(userInfo);
   
       };
       getUserInfo();
