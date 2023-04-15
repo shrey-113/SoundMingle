@@ -48,35 +48,35 @@ function Duo() {
     const searchTracks = async () => {
       if (searchValue === "" || songSelected) return;
       setSearchResults([]);
-      let offset = searchValue.charCodeAt(0) % 10;
-      for (let i = 0; i < 10; i++) {
-        const response = await axios.get(
-          `https://api.spotify.com/v1/search?q=${searchValue}&type=track&limit=1&offset=${offset}`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const item = response.data.tracks.items[0];
 
-        if (!item) break;
-        const songName = item.name;
-        const artistNames = item.artists
-          .map((artist) => artist.name)
-          .join(", ");
-        const imageUrl = item.album.images[0].url;
+      console.log(searchValue);
 
-        const TrackUri = item.uri;
-        // console.log(TrackUri)
-        setSearchResults((prevResults) => [
-          ...prevResults,
-          { songName, artistNames, imageUrl, TrackUri },
-        ]);
-        offset = (offset + 1) % 10;
-        await new Promise((resolve) => setTimeout(resolve, 500));
-      }
+      const response = await axios.get(
+        `https://api.spotify.com/v1/search?q=${searchValue}&type=track&limit=10`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const items = response.data.tracks.items;
+
+    
+
+      setSearchResults(
+        items.map((item) => {
+          const songName = item.name;
+          const artistNames = item.artists
+            .map((artist) => artist.name)
+            .join(", ");
+          const imageUrl = item.album.images[0].url;
+
+          const TrackUri = item.uri;
+
+          return { songName, artistNames, imageUrl, TrackUri };
+        })
+      );
     };
     searchTracks();
   }, [searchValue, token, dispatch, songSelected]);
@@ -163,8 +163,6 @@ function Duo() {
           <div style={{ overflowY: "scroll", height: "376px" }}>
             {searchValue !== "" &&
               searchResults
-                .sort((a, b) => a.songName.localeCompare(b.songName))
-                .slice(0, 10)
                 .map((result, index) => (
                   <SearchResultCard
                     key={result.id || index}
