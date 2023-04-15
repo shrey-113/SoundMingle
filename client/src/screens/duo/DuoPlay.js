@@ -14,12 +14,13 @@ function DuoPlay(props) {
   const [buttonstate,setbuttonstate]=useState(false)
   
   const userName=localStorage.getItem("userName");
+
   const trackUris = [props.TrackUri, props.othersUri]
 
 
 
   const ClickedSkip = () => {
-    console.log(props.roomsdata)
+    console.log(props.roomsid)
    
     socket.emit("skipped",{skippedStatus:{
       isSkipped:true,
@@ -37,7 +38,7 @@ function DuoPlay(props) {
       else{
 
         setbuttonstate(true)
-         socket.emit("deleteRoom", props.roomsdata);
+        //  socket.emit("deleteRoom", props.roomsid);
 
       }
 

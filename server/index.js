@@ -23,57 +23,38 @@ io.on("connection", (socket) => {
 
   socket.on("join", (data) => {
     const roomsData = JSON.parse(fs.readFileSync("./rooms.json"));
-
-    if (roomsData.rooms.length == 0) {
+  
+    const openRooms = roomsData.rooms.filter(room => room.isOpen);
+  
+    const roomWithOneParticipant = openRooms.find(room => room.participants.length === 1);
+  
+    if (roomWithOneParticipant) {
+      roomWithOneParticipant.participants.push(data);
+      roomWithOneParticipant.isOpen = false;
+    } else {
       const newRoomId = uuidv4();
       const participants = [data];
-
+  
       const newRoom = {
         RoomId: newRoomId,
         participants: participants,
         isOpen: true,
       };
-
+  
       roomsData.rooms.push(newRoom);
-      console.log("new room created");
-    } else {
-      let Openrooms = [];
-
-      roomsData.rooms.forEach((element) => {
-        if (element.isOpen) {
-          Openrooms.push(element);
-        }
-      });
-
-      if (Openrooms.length > 0) {
-        let n = Openrooms.length;
-        let random_Room_no = Math.floor(Math.random() * n);
-        const random_room = Openrooms[random_Room_no];
-        random_room.isOpen = false;
-        random_room.participants.push(data);
-      } else {
-        const newRoomId = uuidv4();
-        const participants = [data];
-
-        const newRoom = {
-          RoomId: newRoomId,
-          participants: participants,
-          isOpen: true,
-        };
-
-        roomsData.rooms.push(newRoom);
-      }
     }
+  
 
     fs.writeFileSync("./rooms.json", JSON.stringify(roomsData));
-    // console.log(roomsData)
-
-    roomsData.rooms.forEach((element) => {
-      if (element.participants.length == 2) {
-        io.emit("roomsData", roomsData);
-      }
-    });
+  
+  roomsData.rooms.forEach((room) => {
+    if (room.participants.length === 2) {
+      io.emit("roomsData", roomsData);
+    }
   });
+
+  });
+  
   socket.on("deleteRoom", (roomId) => {
     console.log(roomId);
     const roomsData = JSON.parse(fs.readFileSync("./rooms.json"));

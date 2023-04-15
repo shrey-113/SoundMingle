@@ -19,17 +19,23 @@ function BridgeLoad(props) {
   const [otherssongname,  setotherssongname] = useState("");
   const [othersartist, setothersartist] = useState([]);
   const[otherssongimage,setotherssongimage]=useState("")
-  const[roomsdata,setroomsdata]=useState("")
+  const[roomsid,setroomsid]=useState("")
+  // const[roomsdata,setroomsdata]=useState("")
+  const[roomsstatus,setroomstatus]=useState()
 
 
   
 
   useEffect(() => {
     socket.on("roomsData", (data) => {
+      // setroomsdata(data)
+      setroomsid(data.rooms[0].RoomId);
+      console.log(data.rooms[0].RoomId);
 
-      setroomsdata(data.rooms[0].RoomId);
       const myUsername = localStorage.getItem("userName");
       const participants = data.rooms[0].participants;
+      setroomstatus(data.rooms[0].isOpen)
+
 
       participants.forEach(participant => {
         const participantData = Object.values(participant)[0];
@@ -41,7 +47,7 @@ function BridgeLoad(props) {
         const participantsongimage=participantData.song_image
         
 
-        if (participantUsername !== myUsername) {
+        if (participantUsername !== myUsername && !roomsstatus) {
 
           setotherssongname(participantsongname)
           setothersartist(participantartist)
@@ -50,10 +56,21 @@ function BridgeLoad(props) {
           setothersUsername(participantUsername);
           setothersProfileImage(participantprofileImage);
           setBothUsersConnected(true);
+          
 
         }
+      
+        
+   
       });
+
+      socket.emit("deleteRoom", roomsid);
     });
+
+    
+
+
+    
 
     return () => {
       socket.off("roomsData");
@@ -69,7 +86,7 @@ function BridgeLoad(props) {
   }, [props.TrackUri, props.imageUrl, props.artistNames, props.Songname]);
 
   if (showLoading && bothUsersConnected) {
-    return  <DuoPlay roomsdata={roomsdata}  othersartist={othersartist} otherssongimage={otherssongimage} otherssongname={otherssongname} othersUri={othersUri} othersprofileImage={othersprofileImage} othersusername={othersusername} Songname={searchValue} TrackUri={Uri} imageUrl={imageUrl} artistNames={artistNames} />;
+    return  <DuoPlay roomsid={roomsid}  othersartist={othersartist} otherssongimage={otherssongimage} otherssongname={otherssongname} othersUri={othersUri} othersprofileImage={othersprofileImage} othersusername={othersusername} Songname={searchValue} TrackUri={Uri} imageUrl={imageUrl} artistNames={artistNames} />;
   } else {
     return <Loadingcount othersprofileImage={othersprofileImage} othersusername={othersusername} />;
   }
