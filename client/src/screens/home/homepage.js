@@ -26,7 +26,7 @@ function Homepage() {
         },
       });
 
-      console.log(response)
+      // console.log(response)
 
       const playlists = response.data.items;
       // console.log(`Number of playlists: ${playlists.length}`);

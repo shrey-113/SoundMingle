@@ -7,8 +7,8 @@ import { IoIosPeople } from "react-icons/io";
 import { useStateProvider } from "../../utils/StateProvider";
 
 function Sidebar() {
-  const [{ userInfo }] = useStateProvider();
   
+  const [{ userInfo }] = useStateProvider();
 
   return (
     <div className="sidebar-container">
