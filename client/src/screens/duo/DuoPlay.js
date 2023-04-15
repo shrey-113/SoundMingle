@@ -5,7 +5,7 @@ import shrey from "../../assets/shrey.jpeg"
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
-function DuoPlay() {
+function DuoPlay(props) {
     return (
         <div className='absolute bg-black z-10 w-full h-full '>
             <h1 className='text-white text-center mt-16 text-xl underline'>Your Recomendation</h1>

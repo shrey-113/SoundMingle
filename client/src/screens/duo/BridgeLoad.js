@@ -3,20 +3,24 @@ import Loadingcount from './Loadingcount'
 import DuoPlay from './DuoPlay'
 
 function BridgeLoad() {
-    const [showLoading, setShowLoading] = useState(true);
-  
-    useEffect(() => {
-      setTimeout(() => {
-        setShowLoading(false);
-      }, 6000);
-    }, []);
-  
-    return (
-      <div>
-        {showLoading ? <Loadingcount /> : <DuoPlay />}
-      </div>
-    );
+  const [showLoading, setShowLoading] = useState(true);
+  const [isPlayerOne, setIsPlayerOne] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowLoading(false);
+    }, 6000);
+  }, []);
+
+  const handlePlayerChange = () => {
+    setIsPlayerOne(!isPlayerOne);
   }
-  
-  export default BridgeLoad;
- 
+
+  return (
+    <div>
+      {showLoading ? <Loadingcount /> : <DuoPlay isPlayerOne={isPlayerOne} onPlayerChange={handlePlayerChange} />}
+    </div>
+  );
+}
+
+export default BridgeLoad;
