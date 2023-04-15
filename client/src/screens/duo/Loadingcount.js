@@ -1,35 +1,10 @@
-import React, { useState, useEffect } from 'react';
-// import tom from '../../assets/tom.png';
-import jerry from '../../assets/jerry.png';
 import logo from '../../assets/logo.png';
 import { useStateProvider } from '../../utils/StateProvider';
 
 function Loadingcount(props) {
-  const [counter, setCounter] = useState(5);
-  const [showMatching, setShowMatching] = useState(true);
+
   const [{ userInfo }] = useStateProvider();
 
-  
-
-  
-  useEffect(() => {
-    setTimeout(() => {
-      setShowMatching(false);
-    }, 2000);
-  }, []);
-
-
-  useEffect(() => {
-    const countdownInterval = setInterval(() => {
-      setCounter((prevState) => (prevState > 0 ? prevState - 1 : prevState));
-    }, 1000);
-
-    if (counter === 0) {
-      clearInterval(countdownInterval);
-    }
-
-    return () => clearInterval(countdownInterval);
-  }, [counter]);
 
   return (
       <div className="absolute bg-black z-10 w-full h-full flex flex-col justify-center items-center">
@@ -49,15 +24,11 @@ function Loadingcount(props) {
           </div>
         </div>
         
-        <div className="mt-8">
-          {showMatching ? (
-            <h2 className="text-white text-2xl">Matching...</h2>
-          ) : (
+        <div className="mt-8">(
             <>
-              <h2 className="text-white text-2xl">Song will play in</h2>
-              <p className="text-white text-2xl">{counter}...</p>
+              <h2 className="text-white text-2xl">Matching<span className="absolute animate-pulse animate-ping after:content-'. . .'">...</span></h2>
             </>
-          )}
+          )
         </div>
       </div>
 

@@ -62,7 +62,7 @@ function Duo() {
       );
       const items = response.data.tracks.items;
 
-    
+
 
       setSearchResults(
         items.map((item) => {
@@ -183,8 +183,13 @@ function Duo() {
         </div>
         <button
           type="match"
-          onClick={handleClick}
-          disabled={!songSelected}
+          onClick={() => {
+            if (!songSelected) {
+              alert('Please select a song before matching!');
+            } else {
+              handleClick();
+            }
+          }}
           className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
         >
           Match
