@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import tom from '../../assets/tom.png';
+// import tom from '../../assets/tom.png';
 import jerry from '../../assets/jerry.png';
 import logo from '../../assets/logo.png';
+import { useStateProvider } from '../../utils/StateProvider';
 
-function Loadingcount() {
+function Loadingcount(props) {
   const [counter, setCounter] = useState(5);
   const [showMatching, setShowMatching] = useState(true);
+  const [{ userInfo }] = useStateProvider();
 
+  
+
+  
   useEffect(() => {
     setTimeout(() => {
       setShowMatching(false);
     }, 2000);
   }, []);
+
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -30,16 +36,16 @@ function Loadingcount() {
         <div className='flex justify-center items-center'>
           <div className="flex flex-col items-center">
             <div className="w-48 h-48 rounded-full overflow-hidden bg-slate-100" style={{ aspectRatio: '1/1' }}>
-              <img src={tom} alt="Profile" className="w-full h-full object-cover" />
+              <img src={userInfo?.image} alt="Profile" className="w-full h-full object-cover" />
             </div>
-            <p className="text-white mt-2">Tom</p>
+            <p className="text-white mt-2">{userInfo?.userName}</p>
           </div>
           <img src={logo} className='w-20 h-20 mx-4' alt="mainlogo"/>
           <div className="flex flex-col items-center">
             <div className="w-48 h-48 rounded-full overflow-hidden bg-slate-100" style={{ aspectRatio: '1/1' }}>
-              <img src={jerry} alt="Profile" className="w-full h-full object-cover" />
+              <img src={props.othersprofileImage} alt="Profile" className="w-full h-full object-cover" />
             </div>
-            <p className="text-white mt-2">Jerry</p>
+            <p className="text-white mt-2">{props.othersusername}</p>
           </div>
         </div>
         

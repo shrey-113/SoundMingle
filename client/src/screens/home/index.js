@@ -19,7 +19,7 @@ function Home() {
 
   const [load, setLoading] = useState(true);
 
-  const [{ token }, dispatch] = useStateProvider('0ffdd015548d4b369d66245e731baf50');
+  const [{ token }, dispatch] = useStateProvider();
 
   // console.log(token);
 
@@ -38,9 +38,13 @@ function Home() {
           image: data.images[0].url,
         };
 
+        localStorage.setItem('userId', data.id);
+        localStorage.setItem('profileImage', data.images[0].url);
+        localStorage.setItem('userName', data.display_name);
         // console.log({data})
         dispatch({ type: reducerCases.SET_USER, userInfo });
         // console.log(userInfo);
+
   
       };
       getUserInfo();
