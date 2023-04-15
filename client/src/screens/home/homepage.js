@@ -4,11 +4,10 @@ import "./home.css"
 import sm from "./2.png"
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-
-
-
 import axios from 'axios';
 import { useStateProvider } from '../../utils/StateProvider';
+import SpotifyPlaylist from '../../components/home/spotifyPlaylist'
+import TopArtists from '../../components/home/topArtists'
 
 function Homepage() {
 
@@ -56,30 +55,26 @@ function Homepage() {
 
   return (
     <>
-     
-      <div className='grid grid-cols-2'>
-        <div className='translate-y-20'>
-          <div className='flex'>
-            <img className='w-40 h-20' src={sm} alt="logosm" />
-            <h1 className='text-white font-serif font-extrabold text-4xl '>Sound Mingle</h1>
-          </div>
-          <div className='text-white'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
-        </div>
-        <div className='flex flex-col items-center justify-center'>
+     <div className="flex flex-row mt-20 mx-20">
+       <div>
+         <img className="h-28" src={sm}></img>
+       </div>
+       <div className="mt-9">
 
-          <h1 className='text-white text-2xl py-4'>Your Playlist</h1>
-          <div className='bg-white w-80 h-80'>
-            <Carousel showStatus={false} showIndicators={false}  showThumbs={false}swipeable={true} infiniteLoop={true}  autoPlay={true} interval={3000}>
-              {playlistImages.map((image, index) => (
-                <div  key={index}>
-                  <img  src={image} alt={`Playlist ${index + 1}`} className="cc-img" />
-                </div>
-              ))}
-            </Carousel>
+         <h1 className="text-white text-4xl">SOUND MINGLE</h1>
+         <p className="text-white text-sm w-96 mt-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in urna eget massa fermentum lobortis ac eget tortor. Sed consequat, ipsum non dignissim malesuada, purus velit tincidunt dolor, ac faucibus lorem enim et diam. Integer mattis massa sit amet erat vehicula, vel malesuada orci venenatis.</p>
+         <h1 className="text-white text-3xl font-bold my-6 mt-28">Your Top Artists</h1>
+         <div>
+            <TopArtists/>
+         </div>
 
-          </div>
-        </div>
-      </div>
+       </div>
+       <div className="mt-8">
+         <SpotifyPlaylist/>
+       </div>
+       
+     </div>
+    
 
  
     </>
