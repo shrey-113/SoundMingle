@@ -8,7 +8,7 @@ import { useStateProvider } from "../../utils/StateProvider";
 
 function Sidebar() {
   const [{ userInfo }] = useStateProvider();
-
+  
 
   return (
     <div className="sidebar-container">
