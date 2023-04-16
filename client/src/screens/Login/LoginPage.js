@@ -18,7 +18,7 @@ export default function LoginPage() {
           <img src={loginimg} alt="png_login" className="w-1/3 h-auto" />
           <button
             onClick={handleLoginClick}
-            className="bg-emerald-400 text-white rounded p-2 text-lg hover:bg-emerald-300 w-40"
+            className="bg-emerald-400 text-white rounded-full py-2 px-4 text-lg hover:bg-emerald-300 w-40"
           >
             Login to Spotify
           </button>
