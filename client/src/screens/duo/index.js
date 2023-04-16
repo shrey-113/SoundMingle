@@ -5,6 +5,7 @@ import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./duo.css";
 import BridgeLoad from "./BridgeLoad";
+export const socket = io.connect("http://localhost:3001");
 
 function Duo() {
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
@@ -62,8 +63,6 @@ function Duo() {
       );
       const items = response.data.tracks.items;
 
-    
-
       setSearchResults(
         items.map((item) => {
           const songName = item.name;
@@ -103,12 +102,12 @@ function Duo() {
 
     setLoading(true);
 
-    const socket = io.connect("http://localhost:3001");
     const userId = localStorage.getItem("userId");
     const profileImage = localStorage.getItem("profileImage");
     const userName = localStorage.getItem("userName");
     let data = {};
-    data[userId] = {
+    data = {
+      userid: userId,
       userName: userName,
       profileImage: profileImage,
       song_name: searchValue,
@@ -162,23 +161,22 @@ function Duo() {
           />
           <div style={{ overflowY: "scroll", height: "376px" }}>
             {searchValue !== "" &&
-              searchResults
-                .map((result, index) => (
-                  <SearchResultCard
-                    key={result.id || index}
-                    songName={result.songName}
-                    artistNames={result.artistNames}
-                    imageUrl={result.imageUrl}
-                    onClick={() => {
-                      handleSongSelect(
-                        result.songName,
-                        result.TrackUri,
-                        result.imageUrl,
-                        result.artistNames
-                      );
-                    }}
-                  />
-                ))}
+              searchResults.map((result, index) => (
+                <SearchResultCard
+                  key={result.id || index}
+                  songName={result.songName}
+                  artistNames={result.artistNames}
+                  imageUrl={result.imageUrl}
+                  onClick={() => {
+                    handleSongSelect(
+                      result.songName,
+                      result.TrackUri,
+                      result.imageUrl,
+                      result.artistNames
+                    );
+                  }}
+                />
+              ))}
           </div>
         </div>
         <button

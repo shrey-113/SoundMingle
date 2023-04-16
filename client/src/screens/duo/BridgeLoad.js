@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Loadingcount from './Loadingcount'
-import DuoPlay from './DuoPlay'
-import io from "socket.io-client";
-
-const socket = io.connect("http://localhost:3001");
+import React, { useState, useEffect } from "react";
+import Loadingcount from "./Loadingcount";
+import DuoPlay from "./DuoPlay";
+import { socket } from "./index";
 
 function BridgeLoad(props) {
   const [showLoading, setShowLoading] = useState(true);
@@ -16,61 +14,45 @@ function BridgeLoad(props) {
   const [othersUri, setothersUri] = useState("");
   const [othersusername, setothersUsername] = useState("");
   const [othersprofileImage, setothersProfileImage] = useState("");
-  const [otherssongname,  setotherssongname] = useState("");
+  const [otherssongname, setotherssongname] = useState("");
   const [othersartist, setothersartist] = useState([]);
-  const[otherssongimage,setotherssongimage]=useState("")
-  const[roomsid,setroomsid]=useState("")
+  const [otherssongimage, setotherssongimage] = useState("");
+  const [roomsid, setroomsid] = useState("");
   // const[roomsdata,setroomsdata]=useState("")
-  const[roomsstatus,setroomstatus]=useState()
-
-
-  
+  const [roomsstatus, setroomstatus] = useState();
 
   useEffect(() => {
     socket.on("roomsData", (data) => {
       // setroomsdata(data)
-      setroomsid(data.rooms[0].RoomId);
-      console.log(data.rooms[0].RoomId);
+      console.log(data);
+      setroomsid(data.room_id);
+      console.log(data.room_id);
 
       const myUsername = localStorage.getItem("userName");
-      const participants = data.rooms[0].participants;
-      setroomstatus(data.rooms[0].isOpen)
+      const participants = [data.user_1, data.user_2];
+      setroomstatus(!data.isfull);
 
-
-      participants.forEach(participant => {
-        const participantData = Object.values(participant)[0];
-        const participantUsername = participantData.userName;
-        const participantprofileImage= participantData.profileImage;
-        const participanttrackuri=participantData.track_uri
-        const participantsongname=participantData.song_name
-        const participantartist=participantData.artist_name
-        const participantsongimage=participantData.song_image
-        
+      participants.forEach((participant) => {
+        const participantUsername = participant.userName;
+        const participantprofileImage = participant.profileImage;
+        const participanttrackuri = participant.track_uri;
+        const participantsongname = participant.song_name;
+        const participantartist = participant.artist_name;
+        const participantsongimage = participant.song_image;
 
         if (participantUsername !== myUsername && !roomsstatus) {
-
-          setotherssongname(participantsongname)
-          setothersartist(participantartist)
-          setotherssongimage(participantsongimage)
-          setothersUri(participanttrackuri)
+          setotherssongname(participantsongname);
+          setothersartist(participantartist);
+          setotherssongimage(participantsongimage);
+          setothersUri(participanttrackuri);
           setothersUsername(participantUsername);
           setothersProfileImage(participantprofileImage);
           setBothUsersConnected(true);
-          
-
         }
-      
-        
-   
       });
 
-      socket.emit("deleteRoom", roomsid);
+      // socket.emit("deleteRoom", roomsid);
     });
-
-    
-
-
-    
 
     return () => {
       socket.off("roomsData");
@@ -86,11 +68,29 @@ function BridgeLoad(props) {
   }, [props.TrackUri, props.imageUrl, props.artistNames, props.Songname]);
 
   if (showLoading && bothUsersConnected) {
-    return  <DuoPlay roomsid={roomsid}  othersartist={othersartist} otherssongimage={otherssongimage} otherssongname={otherssongname} othersUri={othersUri} othersprofileImage={othersprofileImage} othersusername={othersusername} Songname={searchValue} TrackUri={Uri} imageUrl={imageUrl} artistNames={artistNames} />;
+    return (
+      <DuoPlay
+        roomsid={roomsid}
+        othersartist={othersartist}
+        otherssongimage={otherssongimage}
+        otherssongname={otherssongname}
+        othersUri={othersUri}
+        othersprofileImage={othersprofileImage}
+        othersusername={othersusername}
+        Songname={searchValue}
+        TrackUri={Uri}
+        imageUrl={imageUrl}
+        artistNames={artistNames}
+      />
+    );
   } else {
-    return <Loadingcount othersprofileImage={othersprofileImage} othersusername={othersusername} />;
+    return (
+      <Loadingcount
+        othersprofileImage={othersprofileImage}
+        othersusername={othersusername}
+      />
+    );
   }
 }
-  
 
 export default BridgeLoad;
