@@ -8,7 +8,7 @@ import Creatform from '../../components/Group/Createform';
 function Group() {
     const [showCreatePopUp, setShowCreatePopUp] = useState(false);
     const [showJoinPopUp, setShowJoinPopUp] = useState(false);
-
+    
     const handleCreateRoomClick = () => {
         setShowCreatePopUp(true);
     };
