@@ -1,5 +1,7 @@
 const Spotify = {
+
   clientId: "0ffdd015548d4b369d66245e731baf50",
+
   redirectUrl: "http://localhost:3000/",
   apiUrl: "https://accounts.spotify.com/authorize",
   scope: [
