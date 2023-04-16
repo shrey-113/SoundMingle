@@ -75,9 +75,8 @@ function DuoPlay(props) {
         <button
           id="user"
           onClick={ClickedSkip}
-          className={`text-white bg-transparent border-2 rounded-full p-2 w-20 mx-2 ${
-            buttonstate ? "border-red-500" : "border-white"
-          }`}
+          className={`text-white bg-transparent border-2 rounded-full p-2 w-20 mx-2 ${buttonstate ? "border-red-500" : "border-white"
+            }`}
         >
           Skip
         </button>
@@ -97,6 +96,11 @@ function DuoPlay(props) {
             alt="Profile"
             className="w-full h-full object-cover"
           />
+
+        </div>
+        <div class="relative">
+          <div class="absolute top-2 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-green-300 animate-ping"></div>
+          <div class="absolute top-2 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-green-300"></div>
         </div>
         <h1 className="text-white text-center">{props.othersusername}</h1>
       </div>
