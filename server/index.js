@@ -48,41 +48,46 @@ io.on("connection", (socket) => {
       if (room.user_1 && room.user_2) {
         room.isfull = true;
       }
-      io.emit("roomsData", room);
       console.log(room);
       socket.join(roomID);
       curRoomId = roomID;
+      io.to(curRoomId).emit("roomsData", room);
 
       await fsp.writeFile("./data/rooms.json", JSON.stringify({ rooms }));
     }
   });
 
-  socket.on("deleteRoom", (roomId) => {
-    console.log(roomId);
-    const roomsData = JSON.parse(fs.readFileSync("./rooms.json"));
+  socket.on("skipped", async (data) => {
+    const filePath = path.join(__dirname, "data", "rooms.json");
+    const a = await fsp.readFile(filePath, "utf8");
+    const userData = JSON.parse(a);
+    const rooms = userData.rooms;
 
-    const roomIndex = roomsData.rooms.findIndex(
-      (room) => room.RoomId === roomId
-    );
+    const room = rooms.find((r) => r.room_id === data.roomid);
 
-    if (roomIndex !== -1) {
-      roomsData.rooms.splice(roomIndex, 1);
-      fs.writeFileSync("./rooms.json", JSON.stringify(roomsData));
-      socket.emit("roomsData", roomsData);
-      console.log(`Room ${roomId} deleted`);
+    // if the room was found, update the value of skipped for the specified user
+
+    if (room.user_1.userName === data.userName) {
+      room.user_1.skipped = true;
+    } else if (room.user_2 && room.user_2.userName === data.userName) {
+      room.user_2.skipped = true;
+    } else {
+      console.log("Room not found.");
+    }
+    await fsp.writeFile("./data/rooms.json", JSON.stringify({ rooms }));
+
+    // check if both users have skipped
+    if (room.user_1.skipped && room.user_2.skipped) {
+      io.to(room.user_1.socketid)
+        .to(room.user_2.socketid)
+        .emit("closeConnection");
+    } else {
+      io.to(room.user_1.socketid).to(room.user_2.socketid).emit("turnRed");
     }
   });
 
-  socket.on("skipped", (data) => {
-    const a = fs.readFileSync("./rooms.json", "utf-8");
-    const userData = JSON.parse(a);
-    const participants = userData.rooms[0].participants;
-    const users = [];
-    participants.forEach((participant) => {
-      const userName = Object.values(participant)[0].userName;
-      users.push(userName);
-    });
-    console.log(users);
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
   });
 });
 

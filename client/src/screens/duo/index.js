@@ -114,6 +114,7 @@ function Duo() {
       artist_name: artistNames,
       track_uri: Uri,
       song_image: imageUrl,
+      socketid: socket.id,
       skipped: false,
     };
     socket.emit("join", data);

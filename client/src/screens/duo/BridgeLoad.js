@@ -54,9 +54,9 @@ function BridgeLoad(props) {
       // socket.emit("deleteRoom", roomsid);
     });
 
-    return () => {
-      socket.off("roomsData");
-    };
+    // return () => {
+    //   socket.off("roomsData");
+    // };
   }, []);
 
   useEffect(() => {
