@@ -20,6 +20,7 @@ function BridgeLoad(props) {
   const [roomsid, setroomsid] = useState("");
   // const[roomsdata,setroomsdata]=useState("")
   const [roomsstatus, setroomstatus] = useState();
+  const [trackuriarray, settrackuriarray] = useState([]);
 
   useEffect(() => {
     socket.on("roomsData", (data) => {
@@ -60,6 +61,13 @@ function BridgeLoad(props) {
   }, []);
 
   useEffect(() => {
+    socket.on("trackarray", (data) => {
+      // console.log(data)
+      settrackuriarray(data);
+    });
+  }, []);
+
+  useEffect(() => {
     // setShowLoading(true)
     setUri(props.TrackUri);
     setImageUrl(props.imageUrl);
@@ -81,6 +89,7 @@ function BridgeLoad(props) {
         TrackUri={Uri}
         imageUrl={imageUrl}
         artistNames={artistNames}
+        trackuriarray={trackuriarray}
       />
     );
   } else {

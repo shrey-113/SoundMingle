@@ -48,6 +48,10 @@ io.on("connection", (socket) => {
       if (room.user_1 && room.user_2) {
         room.isfull = true;
       }
+
+      const trackuriarray=[room.user_1.track_uri,room.user_1.track_uri]
+
+      io.emit("trackarray",trackuriarray)
       console.log(room);
       socket.join(roomID);
       curRoomId = roomID;
