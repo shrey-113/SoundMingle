@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-import YourTopArtists from "./yourTopArtists";
-import { useStateProvider } from "../../utils/StateProvider";
-import axios from "axios";
-import { useState } from "react";
+import React from 'react';
+import YourTopArtists from './yourTopArtists'
+
 
 const TopArtists = () => {
+
   const [{ token }, dispatch] = useStateProvider();
 
   const [toponeartist, settoponeartist] = useState(null);
@@ -74,27 +73,28 @@ const TopArtists = () => {
       name: toponeartist || "",
       imageUrl: toponeartistimg || "",
       link: toponeartistlink,
+
     },
     {
       id: 2,
-      name: topsecondartist || "",
-
-      imageUrl: topsecondartistimg || "",
-      link: topsecondartistlink,
+      name: 'The Weeknd',
+      genre: 'R&B',
+      imageUrl: 'https://akns-images.eonline.com/eol_images/Entire_Site/2021330/rs_1200x1200-210430163406-1200-the-weeknd.jpg?fit=around%7C1080:1080&output-quality=90&crop=1080:1080;center,top',
+      link: 'https://google.com'
     },
     {
       id: 3,
-      name: topthirdartist || "",
-
-      imageUrl: topthirdartistimg || "",
-      link: topthirdartistlink,
-    },
+      name: 'Ed Sheeran',
+      genre: 'Pop',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ed_Sheeran-6886_%28cropped%29.jpg/1200px-Ed_Sheeran-6886_%28cropped%29.jpg',
+      link: 'https://google.com'
+    }
   ];
 
   return (
     <div className="flex justify-between">
-      {topArtists.map((artist) => (
-        <YourTopArtists key={artist.id} artist={artist} />
+      {topArtists.map(artist => (
+        <YourTopArtists key={artist.id} artist={artist}/>
       ))}
     </div>
   );

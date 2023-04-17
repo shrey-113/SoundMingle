@@ -5,6 +5,7 @@ import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./duo.css";
 import BridgeLoad from "./BridgeLoad";
+import Chatbox from "../../components/Duo/chatbox";
 export const socket = io.connect("http://localhost:3001");
 
 function Duo() {
@@ -122,87 +123,89 @@ function Duo() {
 
   return (
     <>
-      <div
-        className="bg-black flex flex-col justify-center items-center h-screen relative"
-        style={{
-          transform: "translate(-50%, -50%)",
-          position: "absolute",
-          top: "47%",
-          left: "50%",
-        }}
-      >
-        <h1 className="text-white text-4xl text-center whitespace-nowrap mb-8">
-          Select a song to recommend
-        </h1>
+      <div className="flex items-center">
         <div
-          className="relative"
-          style={{ height: "464px", width: "454px", overflow: "hidden" }}
-        >
-          <svg
-            className="absolute top-0 left-0 mt-2 ml-2 w-6 h-6 text-gray-600"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input
-            type="text"
-            placeholder="Songs"
-            required
-            className="w-80 pl-10 mb-4 rounded-md border border-gray-300 p-2 text-gray-800 focus:outline-none focus:border-green-500"
-            value={searchValue}
-            onChange={handleSearch}
-            style={{ width: "454px" }}
-          />
-          <div style={{ overflowY: "scroll", height: "376px" }}>
-            {searchValue !== "" &&
-              searchResults.map((result, index) => (
-                <SearchResultCard
-                  key={result.id || index}
-                  songName={result.songName}
-                  artistNames={result.artistNames}
-                  imageUrl={result.imageUrl}
-                  onClick={() => {
-                    handleSongSelect(
-                      result.songName,
-                      result.TrackUri,
-                      result.imageUrl,
-                      result.artistNames
-                    );
-                  }}
-                />
-              ))}
-          </div>
-        </div>
-        <button
-          type="match"
-          onClick={() => {
-            if (!songSelected) {
-              alert("Please select a song before matching!");
-            } else {
-              handleClick();
-            }
+          className="bg-black flex flex-col justify-center items-center h-screen relative"
+          style={{
+            transform: "translate(-50%, -50%)",
+            position: "absolute",
+            top: "47%",
+            left: "50%",
           }}
-          className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
         >
-          Match
-        </button>
-        {loading && (
-          <div className="w-full h-full absolute">
-            <BridgeLoad
-              Songname={searchValue}
-              TrackUri={Uri}
-              imageUrl={imageUrl}
-              artistNames={artistNames}
+          <h1 className="text-white text-4xl text-center whitespace-nowrap mb-8">
+            Select a song to recommend
+          </h1>
+          <div
+            className="relative"
+            style={{ height: "464px", width: "454px", overflow: "hidden" }}
+          >
+            <svg
+              className="absolute top-0 left-0 mt-2 ml-2 w-6 h-6 text-gray-600"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              placeholder="Songs"
+              required
+              className="w-80 pl-10 mb-4 rounded-md border border-gray-300 p-2 text-gray-800 focus:outline-none focus:border-green-500"
+              value={searchValue}
+              onChange={handleSearch}
+              style={{ width: "454px" }}
             />
+            <div style={{ overflowY: "scroll", height: "376px" }}>
+              {searchValue !== "" &&
+                searchResults.map((result, index) => (
+                  <SearchResultCard
+                    key={result.id || index}
+                    songName={result.songName}
+                    artistNames={result.artistNames}
+                    imageUrl={result.imageUrl}
+                    onClick={() => {
+                      handleSongSelect(
+                        result.songName,
+                        result.TrackUri,
+                        result.imageUrl,
+                        result.artistNames
+                      );
+                    }}
+                  />
+                ))}
+            </div>
           </div>
-        )}
+          <button
+            type="match"
+            onClick={() => {
+              if (!songSelected) {
+                alert("Please select a song before matching!");
+              } else {
+                handleClick();
+              }
+            }}
+            className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
+          >
+            Match
+          </button>
+          {loading && (
+            <div className="w-full h-full absolute">
+              <BridgeLoad
+                Songname={searchValue}
+                TrackUri={Uri}
+                imageUrl={imageUrl}
+                artistNames={artistNames}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

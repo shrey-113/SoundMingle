@@ -10,8 +10,8 @@ function DuoPlay(props) {
   const [buttonstate, setbuttonstate] = useState(false);
 
   const userName = localStorage.getItem("userName");
-
-  const trackUris = props.trackuriarray;
+  const trackUris = [props.TrackUri, props.othersUri];
+  trackUris.sort();
 
   socket.on("turnRed", () => {
     setbuttonstate(true);
@@ -55,8 +55,8 @@ function DuoPlay(props) {
         alt="album"
         className="mt-8 border-8 border-grey-600 rounded-md"
       />
-      
-  
+      <h1 className="text-white text-center mt-2 text-lg">{props.songName}</h1>
+      <h1 className="text-white text-center text-sm">{props.artistNames}</h1>
       <div className="bg-gray-800 text-white p-2">
         <SpotifyPlayer
           token={token}
@@ -82,7 +82,10 @@ function DuoPlay(props) {
           Skip
         </button>
       </div>
-
+      <div className="absolute top-14 translate-x-96 left-96">
+        <h1 className="text-white text-center">Next</h1>
+        <img src={""} alt="album" className="w-20" />
+      </div>
 
       <div className="absolute top-80 translate-x-96 left-96 ">
         <div
@@ -94,6 +97,10 @@ function DuoPlay(props) {
             alt="Profile"
             className="w-full h-full object-cover"
           />
+        </div>
+        <div class="relative">
+          <div class="absolute top-2 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-green-300 animate-ping"></div>
+          <div class="absolute top-2 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-green-300"></div>
         </div>
         <h1 className="text-white text-center">{props.othersusername}</h1>
       </div>
