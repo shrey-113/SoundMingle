@@ -10,8 +10,15 @@ function Loading() {
     const textWrapper = heroText.querySelector("#sdm");
     textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-    const t2 = gsap.timeline();
 
+    const tl = gsap.timeline();
+    tl.to(loadingRef.current.children[1], { x: 0, duration: 1.5 })
+      .to(loadingRef.current.children[3], { x: 0, duration: 1.5 }, "-=1.5")
+      .to(loadingRef.current.children[0], { x: 0, duration: 1.5 }, "-=1.5")
+      .to(loadingRef.current.children[4], { x: 0, duration: 1.5 }, "-=1.5")
+      .delay(1.5); // Add a delay of 1.5 seconds before playing the second timeline
+    
+    const t2 = gsap.timeline();
     t2.staggerFrom(
       heroText.querySelectorAll(".letter"),
       2,
@@ -19,15 +26,10 @@ function Loading() {
       0.15,
       0.2
     );
-
-    const tl = gsap.timeline();
-    tl.to(loadingRef.current.children[1], { x: 0, duration: 1.5 })
-      .to(loadingRef.current.children[3], { x: 0, duration: 1.5 }, "-=1.5")
-      .to(loadingRef.current.children[0], { x: 0, duration: 1.5 }, "-=1.5")
-      .to(loadingRef.current.children[4], { x: 0, duration: 1.5 }, "-=1.5");
-
-    t2.play();
+    
     tl.play();
+    t2.play();
+
   }, []);
 
   return (

@@ -4,7 +4,7 @@ import io from "socket.io-client";
 const ENDPOINT = "http://localhost:3001"; // replace with your own backend endpoint
 
 const Chatbox = ({ currentUser, recipientUser }) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([""]);
   const [inputMessage, setInputMessage] = useState("");
   const [socket, setSocket] = useState(null);
 
@@ -50,7 +50,7 @@ const Chatbox = ({ currentUser, recipientUser }) => {
         ))}
       </div>
       <form onSubmit={handleSubmit}>
-        <input className="m-2 border-solid border-white border-2 rounded text-sm p-1"
+        <input className="m-2 border-solid border-white text-black border-2 rounded text-sm p-1 placeholder-black"
           type="text"
           value={inputMessage}
           placeholder="Enter your message"

@@ -5,9 +5,10 @@ import { AiFillHome } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { useStateProvider } from "../../utils/StateProvider";
+import logout from "../../assets/shutdown.png"
 
 function Sidebar() {
-  
+
   const [{ userInfo }] = useStateProvider();
 
   return (
@@ -30,6 +31,11 @@ function Sidebar() {
       </div>
 
       <div></div>
+      <div>
+        <button type="logout" className="w-12 hover:border-2 rounded-full">
+          <img src={logout} alt="logouticon" />
+        </button>
+      </div>
     </div>
   );
 }
