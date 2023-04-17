@@ -4,6 +4,7 @@ import "./sidebar.css";
 import { AiFillHome } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
+import { BsInfoCircleFill } from "react-icons/bs";
 import { useStateProvider } from "../../utils/StateProvider";
 import logout from "../../assets/shutdown.png"
 
@@ -25,9 +26,10 @@ function Sidebar() {
       </div>
 
       <div className="sidebar-buttons">
-        <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill />} />
         <SidebarButton title="Home" to="/home" icon={<AiFillHome />} />
+        <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill />} />
         <SidebarButton title="Group" to="/group" icon={<IoIosPeople />} />
+        <SidebarButton title="About" to="/about" icon={<BsInfoCircleFill />} />
       </div>
 
       <div></div>
