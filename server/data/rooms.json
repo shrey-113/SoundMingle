@@ -1,3 +1,1 @@
-{
-  "rooms": []
-}
+{"rooms":[{"room_id":"802bf745-9836-45e6-bd25-b77864e51b96","user_1":{"userid":"3kj06gxrhpa0dcm38nsgsigaf","userName":"Adi jain","profileImage":"https://i.scdn.co/image/ab6775700000ee85c0f15c8adcf42646dec28dfc","song_name":"Agar Tum Saath Ho","artist_name":"Alka Yagnik, Arijit Singh","track_uri":"spotify:track:3hkC9EHFZNQPXrtl8WPHnX","song_image":"https://i.scdn.co/image/ab67616d0000b273da50894e074ecd5ce61de0a1","skipped":false},"user_2":{"userid":"31o4h3ix5ayfrtglsnnkkuixuda4","userName":"Ashith","profileImage":"https://i.scdn.co/image/ab6775700000ee8543b7e4c7bdaabd1d61ee19d8","song_name":"Gangsta's Paradise","artist_name":"Coolio, L.V.","track_uri":"spotify:track:1DIXPcTDzTj8ZMHt3PDt8p","song_image":"https://i.scdn.co/image/ab67616d0000b273c31d3c870a3dbaf7b53186cc","skipped":false},"isfull":true}]}
