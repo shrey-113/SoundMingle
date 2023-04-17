@@ -49,7 +49,12 @@ function Home() {
     getUserInfo();
   }, [dispatch, token]);
 
-
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
 
   useEffect(() => {
@@ -66,12 +71,7 @@ function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+
 
 
   if (load) {
