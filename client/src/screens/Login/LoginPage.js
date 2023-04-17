@@ -12,9 +12,8 @@ export default function LoginPage() {
 
   
   return (
-  
-     
-        <div className="w-full h-screen bg-black text-white absolute flex flex-col justify-center items-center">
+ 
+        <div className="w-screen h-full  bg-black text-white absolute flex flex-col justify-center items-center">
           <img src={loginimg} alt="png_login" className="w-1/3 h-auto" />
           <button
             onClick={handleLoginClick}

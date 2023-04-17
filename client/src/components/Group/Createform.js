@@ -1,16 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoMdMusicalNote } from "react-icons/io";
 
 function Creatform() {
-    const [groupName, setGroupName] = useState("");
-    const [totalMembers, setTotalMembers] = useState("");
-    const [genre, setGenre] = useState("");
-    const [roomType, setRoomType] = useState("public");
+  const [groupName, setGroupName] = useState("");
+  const [totalMembers, setTotalMembers] = useState("");
+  const [genre, setGenre] = useState("");
+  const [roomType, setRoomType] = useState("public");
 
+  const navigate = useNavigate(); // Get the history object
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // generate random group ID
+    const groupId = Math.floor(Math.random() * 1000000);
+    // navigate to new room page
+    navigate(`/group/${groupId}/room`);
+  };
     return (
         <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-md mx-auto mt-8">
             <div className="flex flex-col mb-4">

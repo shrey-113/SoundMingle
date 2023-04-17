@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Tablebody({ g_id, g_name, genre, t_members }) {
   return (
@@ -16,9 +17,9 @@ function Tablebody({ g_id, g_name, genre, t_members }) {
         <td className="py-3 px-6 text-left">{genre}</td>
         <td className="py-3 px-6 text-left">{t_members}</td>
         <td className="py-3 px-6 text-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <Link to={`/group/${g_id}/room`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Join
-          </button>
+          </Link>
         </td>
       </tr>
     </>

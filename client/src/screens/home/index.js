@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from '../../components/sidebar';
 import Duo from '../duo/index';
 import Group from '../group/index';
-import { useState, useEffect } from 'react';
-import Loading from '../LoadingPage/Loading';
+import {  useEffect } from 'react';
 import LoginPage from '../Login/LoginPage';
 import Homepage from './homepage';
 import axios from 'axios';
@@ -16,7 +15,7 @@ import NotFoundPage from '../404/NotFoundPage';
 
 function Home() {
 
-  const [load, setLoading] = useState(true);
+
 
   const [{ token }, dispatch] = useStateProvider();
 
@@ -49,34 +48,6 @@ function Home() {
     getUserInfo();
   }, [dispatch, token]);
 
-  useEffect(() => {
-    // Simulate loading time
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
-
-
-  useEffect(() => {
-    // Check if the animation has already been played
-    const hasAnimationPlayed = localStorage.getItem('hasAnimationPlayed');
-    if (hasAnimationPlayed) {
-      setLoading(false);
-    } else {
-      setTimeout(() => {
-        setLoading(false);
-        // Persist that the animation has already been played
-        localStorage.setItem('hasAnimationPlayed', true);
-      }, 3000);
-    }
-  }, []);
-
-
-
-
-  if (load) {
-    return <Loading />;
-  }
   return (
     <div className="main-body">
       <Router>

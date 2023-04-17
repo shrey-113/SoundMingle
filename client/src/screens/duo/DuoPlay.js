@@ -87,7 +87,7 @@ function DuoPlay(props) {
         <img src={""} alt="album" className="w-20" />
       </div>
 
-      <div className="absolute top-80 translate-x-96 left-96 ">
+      <div className="absolute top-64 translate-x-96 left-96 ">
         <div
           className="w-20 h-20 rounded-full overflow-hidden bg-slate-100"
           style={{ aspectRatio: "1/1" }}
