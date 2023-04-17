@@ -7,6 +7,7 @@ import { IoIosPeople } from "react-icons/io";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { useStateProvider } from "../../utils/StateProvider";
 import logout from "../../assets/shutdown.png"
+import { Link } from 'react-router-dom'
 
 function Sidebar() {
 
@@ -34,9 +35,11 @@ function Sidebar() {
 
       <div></div>
       <div>
+        <Link to="/">
         <button type="logout" className="w-12 hover:border-2 rounded-full">
           <img src={logout} alt="logouticon" />
         </button>
+        </Link>
       </div>
     </div>
   );
