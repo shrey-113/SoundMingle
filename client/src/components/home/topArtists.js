@@ -11,9 +11,15 @@ const TopArtists = () => {
   const [topsecondartist, settopsecondartist] = useState(null);
   const [topthirdartist, settopthirdartist] = useState(null);
 
-  const [toponeartistimg, settoponeartistimg] = useState(null);
-  const [topsecondartistimg, settopsecondartistimg] = useState(null);
-  const [topthirdartistimg, settopthirdartistimg] = useState(null);
+  const [toponeartistimg, settoponeartistimg] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/1200px-A_black_image.jpg?20201103073518"
+  );
+  const [topsecondartistimg, settopsecondartistimg] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/1200px-A_black_image.jpg?20201103073518"
+  );
+  const [topthirdartistimg, settopthirdartistimg] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/1200px-A_black_image.jpg?20201103073518"
+  );
 
   const [toponeartistlink, settoponeartistlink] = useState(null);
   const [topsecondartistlink, settopsecondartistlink] = useState(null);
@@ -31,19 +37,33 @@ const TopArtists = () => {
         }
       );
 
-     
-      console.log(response.data)
-      settoponeartist(response.data.items[0].name);
-      settopsecondartist(response.data.items[1].name);
-      settopthirdartist(response.data.items[2].name);
+      // console.log(response.data.items.length);
 
-      settoponeartistimg(response.data.items[0].images[0].url);
-      settopsecondartistimg(response.data.items[1].images[0].url);
-      settopthirdartistimg(response.data.items[2].images[0].url);
+      if (response.data.items.length === 1) {
+        settoponeartist(response.data.items[0].name);
+        settoponeartistimg(response.data.items[0].images[0].url);
+        settoponeartistlink(response.data.items[0].external_urls.spotify);
+      } else if (response.data.items.length === 2) {
+        settoponeartist(response.data.items[0].name);
+        settoponeartistimg(response.data.items[0].images[0].url);
+        settoponeartistlink(response.data.items[0].external_urls.spotify);
 
-      settoponeartistlink(response.data.items[0].external_urls.spotify);
-      settopsecondartistlink(response.data.items[1].external_urls.spotify);
-      settopthirdartistlink(response.data.items[2].external_urls.spotify);
+        settopsecondartist(response.data.items[1].name);
+        settopsecondartistimg(response.data.items[1].images[0].url);
+        settopsecondartistlink(response.data.items[1].external_urls.spotify);
+      } else {
+        settoponeartist(response.data.items[0].name);
+        settopsecondartist(response.data.items[1].name);
+        settopthirdartist(response.data.items[2].name);
+
+        settoponeartistimg(response.data.items[0].images[0].url);
+        settopsecondartistimg(response.data.items[1].images[0].url);
+        settopthirdartistimg(response.data.items[2].images[0].url);
+
+        settoponeartistlink(response.data.items[0].external_urls.spotify);
+        settopsecondartistlink(response.data.items[1].external_urls.spotify);
+        settopthirdartistlink(response.data.items[2].external_urls.spotify);
+      }
     };
     getTopArtists();
   }, [dispatch, token]);
@@ -53,7 +73,7 @@ const TopArtists = () => {
       id: 1,
       name: toponeartist || "",
       imageUrl: toponeartistimg || "",
-      link: toponeartistlink
+      link: toponeartistlink,
     },
     {
       id: 2,
