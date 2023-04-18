@@ -3,15 +3,18 @@ import SpotifyPlayer from "react-spotify-web-playback";
 import { useStateProvider } from "../../utils/StateProvider";
 import { socket } from "./index";
 import axios from "axios";
+import Chatbox from "../../components/Duo/chatbox";
 
 function DuoPlay(props) {
+
+  
   const [{ token }] = useStateProvider();
   const [play, setPlay] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [buttonstate, setbuttonstate] = useState(false);
 
   const userName = localStorage.getItem("userName");
-  const SoundMingleId=localStorage.getItem("SoundMingleId")
+  const SoundMingleId = localStorage.getItem("SoundMingleId");
 
   const trackUris = [props.TrackUri, props.othersUri];
 
@@ -36,30 +39,28 @@ function DuoPlay(props) {
 
     let playlistId = SoundMingleId; // replace with your playlist id
     let tracks = trackUris; // replace with the tracks you want to add
-    
+
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
       url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${token}`
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       data: {
-        uris: tracks
-      }
+        uris: tracks,
+      },
     };
-  
-    axios.request(config)
+
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
       })
       .catch((error) => {
         console.log(error);
       });
-
-
-
   };
 
   const handlePlayerCallback = ({ type, ...data }) => {
@@ -78,16 +79,15 @@ function DuoPlay(props) {
 
   return (
     <div className="absolute bg-black z-10 w-full h-full">
-      <h1 className="text-white text-center mt-16 text-xl underline">
-        Your Recomendation
+      <h1 className="text-white text-center mt-16 text-xl ">
+        {props.othersusername} Recommendation
       </h1>
       <img
-        src={props.imageUrl}
+        src={props.otherssongimage}
         alt="album"
         className="mt-8 border-8 border-grey-600 rounded-md"
       />
-      <h1 className="text-white text-center mt-2 text-lg">{props.songName}</h1>
-      <h1 className="text-white text-center text-sm">{props.artistNames}</h1>
+
       <div className="bg-gray-800 text-white p-2">
         <SpotifyPlayer
           token={token}
@@ -113,12 +113,8 @@ function DuoPlay(props) {
           Skip
         </button>
       </div>
-      <div className="absolute top-14 translate-x-96 left-96">
-        <h1 className="text-white text-center">Next</h1>
-        <img src={""} alt="album" className="w-20" />
-      </div>
 
-      <div className="absolute top-64 translate-x-96 left-96 ">
+      <div className="absolute top-24 translate-x-96 left-80 ">
         <div
           className="w-20 h-20 rounded-full overflow-hidden bg-slate-100"
           style={{ aspectRatio: "1/1" }}
@@ -130,10 +126,13 @@ function DuoPlay(props) {
           />
         </div>
         <div class="relative">
-          <div class="absolute top-2 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-green-300 animate-ping"></div>
-          <div class="absolute top-2 right-0 -mr-1 -mt-1 w-4 h-4 rounded-full bg-green-300"></div>
+          <div class="absolute top-2 right-0 -mr-4 -mt-1 w-4 h-4 rounded-full bg-green-300 animate-ping"></div>
+          <div class="absolute top-2 right-0 -mr-4 -mt-1 w-4 h-4 rounded-full bg-green-300"></div>
         </div>
         <h1 className="text-white text-center">{props.othersusername}</h1>
+      </div>
+      <div className="absolute top-32 left-80  translate-x-60">
+        <Chatbox currentUser={userName} recipientUser={props.othersusername}/>
       </div>
     </div>
   );

@@ -89,6 +89,14 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
+
+
+  socket.on('message',(data)=>{
+
+      console.log(data)
+
+      io.emit("message",data)
+  })
 });
 
 server.listen(3001, () => {

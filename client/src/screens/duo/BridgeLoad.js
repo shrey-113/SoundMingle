@@ -4,7 +4,7 @@ import DuoPlay from "./DuoPlay";
 import { socket } from "./index";
 
 function BridgeLoad(props) {
-  const [showLoading, setShowLoading] = useState(true);
+  // const [showLoading, setShowLoading] = useState(true);
   const [Uri, setUri] = useState("");
 
   const [imageUrl, setImageUrl] = useState("");
@@ -67,7 +67,7 @@ function BridgeLoad(props) {
     setSearchValue(props.Songname);
   }, [props.TrackUri, props.imageUrl, props.artistNames, props.Songname]);
 
-  if (showLoading && bothUsersConnected) {
+  if (bothUsersConnected) {
     return (
       <DuoPlay
         roomsid={roomsid}
