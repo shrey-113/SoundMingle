@@ -9,8 +9,6 @@ import Chatbox from "../../components/Duo/chatbox";
 export const socket = io.connect("http://localhost:3001");
 
 function Duo() {
-
-  
   const SearchResultCard = ({ songName, artistNames, imageUrl, onClick }) => {
     return (
       <div
