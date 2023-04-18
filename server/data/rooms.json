@@ -1,1 +1,30 @@
-{"rooms":[{"room_id":"c4d60e01-65bf-446b-8846-bd64c895f947","user_1":{"userid":"4ewxd2y6xa57bfoqk5y5gflrr","userName":"Shreyansh","profileImage":"https://i.scdn.co/image/ab6775700000ee850e9d8e8992e681c3cf8beb09","song_name":"Closer","artist_name":"The Chainsmokers, Halsey","track_uri":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","song_image":"https://i.scdn.co/image/ab67616d0000b273495ce6da9aeb159e94eaa453","socketid":"kuZACDr5G-I62t4cAAAV","skipped":false},"user_2":{"userid":"3kj06gxrhpa0dcm38nsgsigaf","userName":"Adi jain","profileImage":"https://i.scdn.co/image/ab6775700000ee85c0f15c8adcf42646dec28dfc","song_name":"Blinding Lights","artist_name":"The Weeknd","track_uri":"spotify:track:0VjIjW4GlUZAMYd2vXMi3b","song_image":"https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36","socketid":"Oy7EUj2EHhEkcB5MAAAb","skipped":false},"isfull":true}]}
+{
+  "rooms": [
+    {
+      "room_id": "c4d60e01-65bf-446b-8846-bd64c895f947",
+      "user_1": {
+        "userid": "4ewxd2y6xa57bfoqk5y5gflrr",
+        "userName": "Shreyansh",
+        "profileImage": "https://i.scdn.co/image/ab6775700000ee850e9d8e8992e681c3cf8beb09",
+        "song_name": "Closer",
+        "artist_name": "The Chainsmokers, Halsey",
+        "track_uri": "spotify:track:7BKLCZ1jbUBVqRi2FVlTVw",
+        "song_image": "https://i.scdn.co/image/ab67616d0000b273495ce6da9aeb159e94eaa453",
+        "socketid": "kuZACDr5G-I62t4cAAAV",
+        "skipped": false
+      },
+      "user_2": {
+        "userid": "3kj06gxrhpa0dcm38nsgsigaf",
+        "userName": "Adi jain",
+        "profileImage": "https://i.scdn.co/image/ab6775700000ee85c0f15c8adcf42646dec28dfc",
+        "song_name": "Blinding Lights",
+        "artist_name": "The Weeknd",
+        "track_uri": "spotify:track:0VjIjW4GlUZAMYd2vXMi3b",
+        "song_image": "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36",
+        "socketid": "Oy7EUj2EHhEkcB5MAAAb",
+        "skipped": false
+      },
+      "isfull": true
+    }
+  ]
+}

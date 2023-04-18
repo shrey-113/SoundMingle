@@ -13,6 +13,8 @@ const Spotify = {
     "user-read-playback-position",
     "user-top-read",
     "streaming",
+    "playlist-modify-private",
+    "playlist-modify-public",
   ],
 };
 
