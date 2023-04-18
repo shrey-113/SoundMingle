@@ -4,7 +4,7 @@ import io from "socket.io-client";
 const ENDPOINT = "http://localhost:3001"; // replace with your own backend endpoint
 
 const Chatbox = ({ currentUser, recipientUser }) => {
-  const [messages, setMessages] = useState([""]);
+  const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [socket, setSocket] = useState(null);
 
@@ -30,7 +30,7 @@ const Chatbox = ({ currentUser, recipientUser }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    socket.emit("sendMessage", {
+    socket.emit("message", {
       from: currentUser,
       to: recipientUser,
       message: inputMessage,
@@ -39,13 +39,18 @@ const Chatbox = ({ currentUser, recipientUser }) => {
   };
 
   return (
-    <div className="bg-black m-20 border-solid border-white border-2 rounded max-h-96">
+    <div className="bg-black m-20 border-solid border-white border-2 rounded h-96 w-60 overflow-y-auto overflow-hidden">
       <div className="text-white m-2 font-bold">
         Chatting with {recipientUser}
       </div>
       <div className="">
         {messages.map((message, index) => (
-          <div className="bg-blue-700 m-2 rounded" key={index}>
+          <div
+            className={`m-2 rounded ${
+              message.from === currentUser ? "bg-blue-700" : "bg-green-700"
+            }`}
+            key={index}
+          >
             <div className="text-white mx-2 text-xs font-thin">
               {message.from}
             </div>
@@ -53,21 +58,22 @@ const Chatbox = ({ currentUser, recipientUser }) => {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="m-2 border-solid border-white text-black border-2 rounded text-sm p-1 placeholder-black"
-          type="text"
-          value={inputMessage}
-          placeholder="Enter your message"
-          onChange={(event) => setInputMessage(event.target.value)}
-        />
-        <button
-          className="text-white bg-gray-500 border-white rounded text-sm p-2 mr-2"
-          type="submit"
-        >
-          Send
-        </button>
-      </form>
+      <div class="fixed bottom-0 left-0 w-full bg-gray-200 p-2">
+        <form onSubmit={handleSubmit} class="flex items-center justify-between ">
+          <input
+            className="flex-1 mr-4 py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"            type="text"
+            value={inputMessage}
+            placeholder="Enter your message"
+            onChange={(event) => setInputMessage(event.target.value)}
+          />
+          <button
+            className="px-2 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+            type="submit"
+          >
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
