@@ -125,7 +125,7 @@ function Duo() {
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="flex items-center w-full">
         <div
           className="bg-black flex flex-col justify-center items-center h-screen relative"
           style={{
