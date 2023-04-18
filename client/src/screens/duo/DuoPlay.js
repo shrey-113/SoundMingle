@@ -4,6 +4,7 @@ import { useStateProvider } from "../../utils/StateProvider";
 import { socket } from "./index";
 import axios from "axios";
 import Chatbox from "../../components/Duo/chatbox";
+import weeknd from "../../assets/taylor.jpeg"
 
 function DuoPlay(props) {
 
@@ -80,7 +81,7 @@ function DuoPlay(props) {
   return (
     <div className="absolute bg-black z-10 w-full h-full">
       <h1 className="text-white text-center mt-16 text-xl ">
-        {props.othersusername} Recommendation
+        {props.othersusername}'s Recommendation
       </h1>
       <img
         src={props.otherssongimage}
@@ -133,6 +134,10 @@ function DuoPlay(props) {
       </div>
       <div className="absolute top-32 left-80  translate-x-60">
         <Chatbox currentUser={userName} recipientUser={props.othersusername}/>
+      </div>
+      <div className="absolute top-32 right-80 transform translate-x-[-20rem]">
+        <h1 className="text-white whitespace-nowrap">Your Recommendation</h1>
+        <img src={weeknd} alt="anothereck" className="rounded-md"/>
       </div>
     </div>
   );
