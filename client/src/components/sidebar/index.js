@@ -22,7 +22,7 @@ function Sidebar() {
   return (
     <div className="sidebar-container">
       <div className="profile">
-        <img src={userInfo?.image} alt="profile pic" className="profile-pic" />
+        <img src={userInfo?.image} alt="profile pic" className="profile-pic hover:border-2 rounded-full hover:border-white" />
         <h4 className="username">{userInfo?.userName}</h4>
  
       </div>
