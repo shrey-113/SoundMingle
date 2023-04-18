@@ -4,19 +4,27 @@ import "./home.css";
 import sm from "./2.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from 'axios';
-import { useStateProvider } from '../../utils/StateProvider';
+// import { useStateProvider } from '../../utils/StateProvider';
 import SpotifyPlaylist from '../../components/home/spotifyPlaylist';
 import TopArtists from '../../components/home/topArtists';
 import Loading from '../LoadingPage/Loading';
 
 function Homepage() {
 
-  const [{ token }, dispatch] = useStateProvider();
-  const [playlistImages, setPlaylistImages] = useState([]);
+
+  const [playlistCreated, setPlaylistCreated] = useState(false);
   const [load, setLoading] = useState(true);
+  const[playlistNames,setplaylistNames]=useState([])
+
+  const userId=localStorage.getItem('userId')
+  const token=localStorage.getItem('token')
+
+  // console.log(token)
+
+
 
   useEffect(() => {
-    const getPlaylistpic = async () => {
+    const getPlaylists = async () => {
       const response = await axios.get("https://api.spotify.com/v1/me/playlists", {
         headers: {
           Authorization: "Bearer " + token,
@@ -24,40 +32,93 @@ function Homepage() {
         },
       });
 
-      // console.log(response)
+      // console.log(response.data.items)
 
       const playlists = response.data.items;
-      // console.log(`Number of playlists: ${playlists.length}`);
 
-      const id = playlists.map((playlists) => {
-        return playlists.id;
-      });
+      let array=[]
 
-      console.log(id); //getting id's of playlists it will be usefull to get tracks in that playlist
+      playlists.forEach(element=>{
 
-      const images = playlists.map((playlist) => {
-        return playlist.images[0].url;
-      });
+        // console.log(element.name)
+        array.push(element.name)
 
-      setPlaylistImages(images);
+      })
+
+
+
+      setplaylistNames(array)
+
+
     };
-    getPlaylistpic();
-  }, [dispatch, token]);
+    getPlaylists();
+  }, [token]);
+
+// console.log(playlistNames)
 
   useEffect(() => {
-    // Check if user has already logged in
+   
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
       setLoading(false);
     } else {
-      // Simulate loading time
+ 
       setTimeout(() => {
-        // Mark user as logged in
+   
         localStorage.setItem('isLoggedIn', true);
         setLoading(false);
       }, 4400);
     }
   }, []);
+
+
+  const createPlaylist = () => {
+    if (!playlistCreated) {
+      let soundMingleExists = false;
+  
+      playlistNames.forEach((element) => {
+        if (element === "SoundMingle") {
+          soundMingleExists = true;
+        }
+      });
+  
+      if (!soundMingleExists) {
+        let data = JSON.stringify({
+          name: "SoundMingle",
+          description: "Your recently played songs on SoundMingle",
+          public: true,
+        });
+  
+        let config = {
+          method: "post",
+          maxBodyLength: Infinity,
+          url: `https://api.spotify.com/v1/users/${userId}/playlists`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          data: data,
+        };
+  
+        axios
+          .request(config)
+          .then((response) => {
+            console.log(response.data);
+            setPlaylistCreated(true);
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+          });
+
+          window.location.href='/home'
+      } else {
+        console.log("SoundMingle playlist already exists");
+        setPlaylistCreated(true);
+      }
+    }
+  };
+  
+  
 
   return (
     <>
@@ -81,6 +142,12 @@ function Homepage() {
             </div>
           </div>
           <div className="mt-8">
+          <button
+            onClick={createPlaylist}
+            className="bg-white text-black font-bold py-2 px-10 border border-black rounded-full focus:outline-none focus:shadow-outline hover:bg-gray-100 w-full"
+          >
+            create soundMingle Playlist
+          </button>
             <SpotifyPlaylist />
           </div>
         </div>
