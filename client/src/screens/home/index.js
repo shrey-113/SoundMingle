@@ -12,6 +12,7 @@ import { reducerCases } from '../../utils/Constants';
 import Groupplayer from '../group/Groupplayer';
 
 import NotFoundPage from '../404/NotFoundPage';
+import About from '../about'
 
 function Home() {
 
@@ -57,6 +58,7 @@ function Home() {
           <Route path="/home" element={<Homepage />} />
           <Route path="/duo" element={<Duo />} />
           <Route path="/group" element={<Group />} />
+          <Route path="/about" element={<About />} />
           <Route path="/group/:groupId/room" element={<Groupplayer />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
