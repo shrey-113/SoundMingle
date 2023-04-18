@@ -9,6 +9,8 @@ import TopArtists from "../../components/home/topArtists";
 import Loading from "../LoadingPage/Loading";
 import { Configuration, OpenAIApi } from "openai";
 
+// require('dotenv').config();
+
 function Homepage() {
   const [playlistCreated, setPlaylistCreated] = useState(false);
   const [load, setLoading] = useState(true);
@@ -103,7 +105,9 @@ function Homepage() {
   const [quote, setQuote] = useState("");
 
   const configuration = new Configuration({
-    apiKey: "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",
+  
+  apiKey: "",  //you api key here
+
   });
 
   const openai = new OpenAIApi(configuration);
@@ -129,6 +133,7 @@ function Homepage() {
 
           if (isMounted) {
             setQuote(response.data.choices[0].text);
+            console.log(response.data.choices[0].text)
           }
         } else {
           console.log("No top artists found");
