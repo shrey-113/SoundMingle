@@ -7,9 +7,9 @@ import node from '../../assets/node.png'
 import tailwind from '../../assets/tailwind.png'
 import socket from '../../assets/socket.png'
 import express from '../../assets/express.png'
-import mongodb from '../../assets/mongodb.png'
+import postman from '../../assets/postman.png'
 import profile from '../../assets/profile.png'
-
+import json from '../../assets/json.png'
 
 
 const About = () => {
@@ -23,12 +23,13 @@ const About = () => {
                  <img className='h-28 mx-10' src={js}  />
                  <img className='h-24 mx-10 mt-2' src={react}  />
                  <img className='h-20 mx-10 mt-8' src={node}  />
+                 <img className='h-20 mx-10 mt-8' src={json}  />
                 </div>
                 <div className='flex items-center mb-5'>
                  <img className='h-28 mx-6' src={tailwind} />
                  <img className='h-28 mx-10' src={socket} />
                  <img className='h-20 mx-10' src={express}  />
-                 <img className='h-20 mx-10 ' src={mongodb}  />
+                 <img className='h-20 mx-10 ' src={postman}  />
                 </div>
 
             </div>
