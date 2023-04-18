@@ -1,6 +1,5 @@
 const Spotify = {
-  clientId: "ce3fcc2b03484ccf91343d2a8495e49a",
-
+  clientId: "74d600d3280d4b839d2c1a912087a0d5",
   redirectUrl: "http://localhost:3000/",
   apiUrl: "https://accounts.spotify.com/authorize",
   scope: [
@@ -13,6 +12,8 @@ const Spotify = {
     "user-read-playback-position",
     "user-top-read",
     "streaming",
+    "playlist-modify-private",
+    "playlist-modify-public",
   ],
 };
 

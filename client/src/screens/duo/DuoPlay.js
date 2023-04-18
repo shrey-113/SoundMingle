@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SpotifyPlayer from "react-spotify-web-playback";
 import { useStateProvider } from "../../utils/StateProvider";
 import { socket } from "./index";
+import axios from "axios";
 
 function DuoPlay(props) {
   const [{ token }] = useStateProvider();
@@ -10,7 +11,10 @@ function DuoPlay(props) {
   const [buttonstate, setbuttonstate] = useState(false);
 
   const userName = localStorage.getItem("userName");
+  const SoundMingleId=localStorage.getItem("SoundMingleId")
+
   const trackUris = [props.TrackUri, props.othersUri];
+
   trackUris.sort();
 
   socket.on("turnRed", () => {
@@ -29,6 +33,33 @@ function DuoPlay(props) {
       roomid: `${props.roomsid}`,
       userName: `${userName}`,
     });
+
+    let playlistId = SoundMingleId; // replace with your playlist id
+    let tracks = trackUris; // replace with the tracks you want to add
+    
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${token}`
+      },
+      data: {
+        uris: tracks
+      }
+    };
+  
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+
   };
 
   const handlePlayerCallback = ({ type, ...data }) => {
