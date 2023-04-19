@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import album from "../../assets/weeknd.jpg";
 import SpotifyPlayer from "react-spotify-web-playback";
-import Chatbox from "../../components/Duo/chatbox";
+import Gchatbox from "../../components/Group/Gchat_box";
 import Playlist from "../../components/Group/Playlist";
 // import { socket } from "./index";
 import { useStateProvider } from "../../utils/StateProvider";
@@ -11,7 +11,6 @@ function Groupplayer() {
   const { groupId } = useParams();
 
   const [{ token }] = useStateProvider();
-  
 
   // const userName = localStorage.getItem("userName");
   // const SoundMingleId = localStorage.getItem("SoundMingleId");
@@ -19,10 +18,7 @@ function Groupplayer() {
   // const grouparray=localStorage.getItem("GroupPlaylistarray")
   // const trackUris=grouparray
 
-  const trackUris=["spotify:track:2p8IUWQDrpjuFltbdgLOag"]
-
- 
-
+  trackUris = ["spotify:track:2p8IUWQDrpjuFltbdgLOag"];
 
   if (!token) return null;
 
@@ -43,15 +39,14 @@ function Groupplayer() {
       <h1 className="text-white text-center text-lg">After Hours</h1>
       <h1 className="text-white text-center text-sm">Weeknd</h1>
       <div className="bg-gray-800 text-white p-2 mt-8">
-      <SpotifyPlayer
+        <SpotifyPlayer
           token={token}
           play="true"
           uris={trackUris}
-    
           styles={{
             sliderColor: "#1cb954",
             color: "white",
-         
+
             trackArtistColor: "black",
             trackNameColor: "black",
           }}
@@ -66,7 +61,7 @@ function Groupplayer() {
         </button>
       </div>
       <div className="absolute top-20 left-44 translate-x-[56rem]">
-        <Chatbox />
+        <Gchatbox />
       </div>
 
       <div className="fixed left-32 top-20 ">

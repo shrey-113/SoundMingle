@@ -96,21 +96,39 @@ io.on("connection", (socket) => {
     io.emit("message", data);
   });
 
-  socket.on("joingroup", async (userdata, roomdata) => {
+  socket.on("creategroup", async (userdata, roomdata) => {
     const newRoomId = uuidv4();
     socket.join(newRoomId);
     roomdata.room_id = newRoomId;
 
     roomdata[userdata.userid] = userdata;
-    console.log(roomdata);
     const jsondata = await fsp.readFile("data/grouprooms.json", "utf8");
-    console.log(jsondata);
     const obj = await JSON.parse(jsondata);
-    console.log(obj);
     obj.rooms.push(roomdata);
 
     const newData = JSON.stringify(obj);
-    await fsp.writeFile(filePath, newData);
+    await fsp.writeFile("data/grouprooms.json", newData);
+  });
+
+  socket.on("joingroup", async (groupId, socketId, userdata) => {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+    const jsondata = await fsp.readFile("data/grouprooms.json", "utf8");
+    const obj = await JSON.parse(jsondata);
+    const group = obj.rooms.find((g) => g.group_id === parseInt(groupId));
+
+    if (!group) {
+      console.log(`Group with ID ${groupId} not found`);
+      return;
+    }
+
+    // Add the user ID to the group's users array
+    group.users.push(userdata.userid);
+
+    group[userdata.userid] = userdata;
+    obj.rooms.push(group);
+
+    const newData = JSON.stringify(obj);
+    await fsp.writeFile("data/grouprooms.json", newData);
   });
 });
 

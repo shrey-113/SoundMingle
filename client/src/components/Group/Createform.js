@@ -31,7 +31,7 @@ function Creatform() {
       isfull: false,
     };
 
-    socket.emit("joingroup", userdata, roomdata);
+    socket.emit("creategroup", userdata, roomdata);
     // navigate to new room page
     navigate(`/group/${groupId}/room`);
   };

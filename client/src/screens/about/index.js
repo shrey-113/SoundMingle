@@ -24,7 +24,10 @@ const About = () => {
           TECHNOLOGIES
         </h1>
         <div className="flex items-center mb-5">
-          <img className="h-28 mx-6" src={html} />
+          <img
+            className="h-28 mx-6 hover:h-32 ease-in-out duration-300"
+            src={html}
+          />
           <img className="h-28 mx-10" src={css} />
           <img className="h-28 mx-10" src={js} />
           <img className="h-24 mx-10 mt-2" src={react} />

@@ -1,7 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { socket } from "../../screens/group/index";
 
 function Tablebody({ g_id, g_name, genre, t_members }) {
+  const handleJoin = () => {
+    const socketID = socket.id;
+    const userdata = {
+      userid: localStorage.getItem("userId"),
+      userName: localStorage.getItem("userName"),
+      profileImage: localStorage.getItem("profileImage"),
+      socketid: socket.id,
+    };
+    socket.emit("joingroup", g_id, socketID, userdata);
+  };
+
   return (
     <>
       <tr className="border-b-2 border-gray-200 hover:bg-gray-100">
@@ -17,7 +29,11 @@ function Tablebody({ g_id, g_name, genre, t_members }) {
         <td className="py-3 px-6 text-left">{genre}</td>
         <td className="py-3 px-6 text-left">{t_members}</td>
         <td className="py-3 px-6 text-center">
-          <Link to={`/group/${g_id}/room`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <Link
+            to={`/group/${g_id}/room`}
+            onClick={handleJoin}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
             Join
           </Link>
         </td>
