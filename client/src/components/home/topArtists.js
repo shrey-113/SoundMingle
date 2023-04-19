@@ -27,6 +27,8 @@ const TopArtists = () => {
   const [topsecondartistlink, settopsecondartistlink] = useState(null);
   const [topthirdartistlink, settopthirdartistlink] = useState(null);
 
+  const[TopArtistsarray,setTopArtistsarray]=useState([])
+
   useEffect(() => {
     const getTopArtists = async () => {
       const response = await axios.get(
@@ -45,6 +47,9 @@ const TopArtists = () => {
         settoponeartist(response.data.items[0].name);
         settoponeartistimg(response.data.items[0].images[0].url);
         settoponeartistlink(response.data.items[0].external_urls.spotify);
+
+        setTopArtistsarray([toponeartist])
+
       } else if (response.data.items.length === 2) {
         settoponeartist(response.data.items[0].name);
         settoponeartistimg(response.data.items[0].images[0].url);
@@ -53,6 +58,8 @@ const TopArtists = () => {
         settopsecondartist(response.data.items[1].name);
         settopsecondartistimg(response.data.items[1].images[0].url);
         settopsecondartistlink(response.data.items[1].external_urls.spotify);
+
+        setTopArtistsarray([toponeartist,topsecondartist])
       } else {
         settoponeartist(response.data.items[0].name);
         settopsecondartist(response.data.items[1].name);
@@ -65,10 +72,23 @@ const TopArtists = () => {
         settoponeartistlink(response.data.items[0].external_urls.spotify);
         settopsecondartistlink(response.data.items[1].external_urls.spotify);
         settopthirdartistlink(response.data.items[2].external_urls.spotify);
+
+        setTopArtistsarray([toponeartist,topsecondartist,topthirdartist])
       }
+
+
+
+     
     };
     getTopArtists();
-  }, [dispatch, token]);
+
+
+
+  }, [dispatch, token,toponeartist, topsecondartist, topthirdartist]);
+
+  localStorage.setItem('myArray', JSON.stringify(TopArtistsarray));
+
+  
 
   const topArtists = [
     {

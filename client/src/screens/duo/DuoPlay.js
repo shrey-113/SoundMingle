@@ -137,7 +137,7 @@ function DuoPlay(props) {
       </div>
       <div className="absolute top-32 right-80 transform translate-x-[-20rem]">
         <h1 className="text-white whitespace-nowrap">Your Recommendation</h1>
-        <img src={weeknd} alt="anothereck" className="rounded-md"/>
+        <img src={props.imageUrl} alt="anothereck" className="rounded-md"/>
       </div>
     </div>
   );

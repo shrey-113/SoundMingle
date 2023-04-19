@@ -1,94 +1,78 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect } from "react";
+import { useState } from "react";
 import "./home.css";
 import sm from "./2.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import axios from 'axios';
-// import { useStateProvider } from '../../utils/StateProvider';
-import SpotifyPlaylist from '../../components/home/spotifyPlaylist';
-import TopArtists from '../../components/home/topArtists';
-import Loading from '../LoadingPage/Loading';
+import axios from "axios";
+import SpotifyPlaylist from "../../components/home/spotifyPlaylist";
+import TopArtists from "../../components/home/topArtists";
+import Loading from "../LoadingPage/Loading";
+import { Configuration, OpenAIApi } from "openai";
+
+// require('dotenv').config();
 
 function Homepage() {
-
-
   const [playlistCreated, setPlaylistCreated] = useState(false);
   const [load, setLoading] = useState(true);
-  const[playlistNames,setplaylistNames]=useState([])
+  const [playlistNames, setplaylistNames] = useState([]);
 
-  const userId=localStorage.getItem('userId')
-  const token=localStorage.getItem('token')
-
-  // console.log(token)
-
-
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const getPlaylists = async () => {
-      const response = await axios.get("https://api.spotify.com/v1/me/playlists", {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-
-      // console.log(response.data.items)
+      const response = await axios.get(
+        "https://api.spotify.com/v1/me/playlists",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const playlists = response.data.items;
 
-      let array=[]
+      let array = [];
 
-      playlists.forEach(element=>{
+      playlists.forEach((element) => {
+        array.push(element.name);
+      });
 
-        // console.log(element.name)
-        array.push(element.name)
-
-      })
-
-
-
-      setplaylistNames(array)
-
-
+      setplaylistNames(array);
     };
     getPlaylists();
   }, [token]);
 
-// console.log(playlistNames)
-
   useEffect(() => {
-   
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (isLoggedIn) {
       setLoading(false);
     } else {
- 
       setTimeout(() => {
-   
-        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem("isLoggedIn", true);
         setLoading(false);
       }, 4400);
     }
   }, []);
 
-
   const createPlaylist = () => {
     if (!playlistCreated) {
       let soundMingleExists = false;
-  
+
       playlistNames.forEach((element) => {
         if (element === "SoundMingle") {
           soundMingleExists = true;
         }
       });
-  
+
       if (!soundMingleExists) {
         let data = JSON.stringify({
           name: "SoundMingle",
           description: "Your recently played songs on SoundMingle",
           public: true,
         });
-  
+
         let config = {
           method: "post",
           maxBodyLength: Infinity,
@@ -99,7 +83,7 @@ function Homepage() {
           },
           data: data,
         };
-  
+
         axios
           .request(config)
           .then((response) => {
@@ -110,15 +94,63 @@ function Homepage() {
             console.log(error.response.data);
           });
 
-          window.location.href='/home'
+        window.location.href = "/home";
       } else {
         console.log("SoundMingle playlist already exists");
         setPlaylistCreated(true);
       }
     }
   };
+
+  const [quote, setQuote] = useState("");
+
+  const configuration = new Configuration({
   
-  
+  apiKey: "",  //you api key here
+
+  });
+
+  const openai = new OpenAIApi(configuration);
+  useEffect(() => {
+    const topArtists = JSON.parse(localStorage.getItem("myArray"));
+    let isMounted = true;
+
+    const generateQuote = async () => {
+      try {
+        if (topArtists && topArtists.length > 0) {
+          const randomIndex = Math.floor(Math.random() * topArtists.length);
+          const randomArtist = topArtists[randomIndex];
+
+          const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: `Generate a quote on ${randomArtist} songs lyrics`,
+            temperature: 0.7,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+
+          if (isMounted) {
+            setQuote(response.data.choices[0].text);
+            console.log(response.data.choices[0].text)
+          }
+        } else {
+          console.log("No top artists found");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (!quote) {
+      generateQuote();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [quote]);
 
   return (
     <>
@@ -131,12 +163,10 @@ function Homepage() {
           </div>
           <div className="mt-9">
             <h1 className="text-white text-4xl">SOUND MINGLE</h1>
-            <p className="text-white text-sm w-96 mt-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in urna eget massa fermentum lobortis ac eget
-              tortor. Sed consequat, ipsum non dignissim malesuada, purus velit tincidunt dolor, ac faucibus lorem enim et
-              diam. Integer mattis massa sit amet erat vehicula, vel malesuada orci venenatis.
-            </p>
-            <h1 className="text-white text-3xl font-bold my-6 mt-28">Your Top Artists</h1>
+            <p className="text-white text-lg w-96 mt-8">{quote}</p>
+            <h1 className="text-white text-3xl font-bold my-6 mt-28">
+              Your Top Artists
+            </h1>
             <div>
               <TopArtists />
             </div>
