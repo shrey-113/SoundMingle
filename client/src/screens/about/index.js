@@ -29,7 +29,7 @@ const About = () => {
                  <img className='h-28 mx-6 transform hover:scale-105 transition duration-300' src={tailwind} alt='tailwind' />
                  <img className='h-28 mx-10 transform hover:scale-105 transition duration-300' src={socket} alt='socket' />
                  <img className='h-20 mx-10 transform hover:scale-105 transition duration-300' src={express} alt='express'  />
-                 <img className='h-20 mx-10 transform hover:scale-105 transition duration-300 ' src={mongodb}  alt='mongodb'/>
+                 <img className='h-20 mx-10 transform hover:scale-105 transition duration-300 ' src={postman}  alt='mongodb'/>
                 </div>
 
             </div>

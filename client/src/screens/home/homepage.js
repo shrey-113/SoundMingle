@@ -106,7 +106,7 @@ function Homepage() {
 
   const configuration = new Configuration({
   
-  apiKey: "",  //you api key here
+  apiKey: "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",  //you api key here
 
   });
 
