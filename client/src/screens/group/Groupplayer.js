@@ -42,11 +42,11 @@ function Groupplayer() {
           Leave Group
         </button>
       </div>
-      <div className="fixed top-0 right-0 mt-16">
+      <div className="absolute top-20 left-44 translate-x-[56rem]">
         <Chatbox />
       </div>
 
-      <div className="fixed left-32 top-20">
+      <div className="fixed left-32 top-20 ">
         <Playlist />
       </div>
     </div>

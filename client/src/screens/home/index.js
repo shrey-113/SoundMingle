@@ -30,11 +30,16 @@ function Home() {
           "Content-Type": "application/json",
         },
       });
-      // console.log({data})
+      console.log({data})
+      console.log(data.external_urls.spotify
+        )
       const userInfo = {
         userId: data.id,
         userName: data.display_name,
         image: data.images[0].url,
+        profileLink:data.external_urls.spotify
+
+        
       };
 
       localStorage.setItem('userId', data.id);
