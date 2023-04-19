@@ -57,7 +57,7 @@ function BridgeLoad(props) {
     // return () => {
     //   socket.off("roomsData");
     // };
-  }, []);
+  });
 
   useEffect(() => {
     // setShowLoading(true)

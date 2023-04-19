@@ -11,7 +11,7 @@ function Loadingcount(props) {
       <div className="absolute bg-black z-10 w-full h-full flex flex-col justify-center items-center">
         <div className='flex justify-center items-center'>
           <div className="flex flex-col items-center">
-            <div className="w-48 h-48 rounded-full overflow-hidden bg-slate-100" style={{ aspectRatio: '1/1' }}>
+            <div className="w-48 h-48 rounded-full overflow-hidden bg-slate-100 border-4" style={{ aspectRatio: '1/1' }}>
               <img src={userInfo?.image} alt="Profile" className="w-full h-full object-cover" />
             </div>
             <p className="text-white mt-2">{userInfo?.userName}</p>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./duo.css";
 import BridgeLoad from "./BridgeLoad";
-import Chatbox from "../../components/Duo/chatbox";
+
 export const socket = io.connect("http://localhost:3001");
 
 function Duo() {
