@@ -1,27 +1,14 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { socket } from "../../screens/duo/index";
 
 const ENDPOINT = "http://localhost:3001"; // replace with your own backend endpoint
 
 const Chatbox = ({ currentUser, recipientUser }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io(ENDPOINT);
-    setSocket(newSocket);
-
-    return () => newSocket.close(); // cleanup the socket connection when component unmounts
-  }, []);
 
   useEffect(() => {
     if (!socket) return;
-
-    socket.emit("joinRoom", {
-      currentUser,
-      recipientUser,
-    });
 
     socket.on("message", (message) => {
       setMessages([...messages, message]);
@@ -59,9 +46,13 @@ const Chatbox = ({ currentUser, recipientUser }) => {
         ))}
       </div>
       <div class="fixed bottom-0 left-0 w-full bg-gray-200 p-2">
-        <form onSubmit={handleSubmit} class="flex items-center justify-between ">
+        <form
+          onSubmit={handleSubmit}
+          class="flex items-center justify-between "
+        >
           <input
-            className="flex-1 mr-4 py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"            type="text"
+            className="flex-1 mr-4 py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            type="text"
             value={inputMessage}
             placeholder="Enter your message"
             onChange={(event) => setInputMessage(event.target.value)}

@@ -25,8 +25,6 @@ function BridgeLoad(props) {
     socket.on("roomsData", (data) => {
       // setroomsdata(data)
       console.log(data);
-      setroomsid(data.room_id);
-      console.log(data.room_id);
 
       const myUsername = localStorage.getItem("userName");
       const participants = [data.user_1, data.user_2];
