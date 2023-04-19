@@ -18,7 +18,7 @@ function Groupplayer() {
   // const grouparray=localStorage.getItem("GroupPlaylistarray")
   // const trackUris=grouparray
 
-  trackUris = ["spotify:track:2p8IUWQDrpjuFltbdgLOag"];
+  const trackUris = ["spotify:track:2p8IUWQDrpjuFltbdgLOag"];
 
   if (!token) return null;
 
