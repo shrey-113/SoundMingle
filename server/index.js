@@ -90,13 +90,28 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
 
+  socket.on("message", (data) => {
+    console.log(data);
 
-  socket.on('message',(data)=>{
+    io.emit("message", data);
+  });
 
-      console.log(data)
+  socket.on("joingroup", async (userdata, roomdata) => {
+    const newRoomId = uuidv4();
+    socket.join(newRoomId);
+    roomdata.room_id = newRoomId;
 
-      io.emit("message",data)
-  })
+    roomdata[userdata.userid] = userdata;
+    console.log(roomdata);
+    const jsondata = await fsp.readFile("data/grouprooms.json", "utf8");
+    console.log(jsondata);
+    const obj = await JSON.parse(jsondata);
+    console.log(obj);
+    obj.rooms.push(roomdata);
+
+    const newData = JSON.stringify(obj);
+    await fsp.writeFile(filePath, newData);
+  });
 });
 
 server.listen(3001, () => {

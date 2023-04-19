@@ -105,9 +105,7 @@ function Homepage() {
   const [quote, setQuote] = useState("");
 
   const configuration = new Configuration({
-  
-  apiKey: "",  //you api key here
-
+    apiKey: "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", //you api key here
   });
 
   const openai = new OpenAIApi(configuration);
@@ -133,7 +131,7 @@ function Homepage() {
 
           if (isMounted) {
             setQuote(response.data.choices[0].text);
-            console.log(response.data.choices[0].text)
+            console.log(response.data.choices[0].text);
           }
         } else {
           console.log("No top artists found");
@@ -172,12 +170,12 @@ function Homepage() {
             </div>
           </div>
           <div className="mt-8">
-          <button
-            onClick={createPlaylist}
-            className="bg-white text-black font-bold py-2 px-10 border border-black rounded-full focus:outline-none focus:shadow-outline hover:bg-gray-100 w-full"
-          >
-            Create SoundMingle Playlist
-          </button>
+            <button
+              onClick={createPlaylist}
+              className="bg-white text-black font-bold py-2 px-10 border border-black rounded-full focus:outline-none focus:shadow-outline hover:bg-gray-100 w-full"
+            >
+              Create SoundMingle Playlist
+            </button>
             <SpotifyPlaylist />
           </div>
         </div>
