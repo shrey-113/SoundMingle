@@ -172,12 +172,12 @@ function Homepage() {
             </div>
           </div>
           <div className="mt-8">
-            <button
-              onClick={createPlaylist}
-              className="bg-white text-black font-bold py-2 px-10 border border-black rounded-full focus:outline-none focus:shadow-outline hover:bg-gray-100 w-full"
-            >
-              create soundMingle Playlist
-            </button>
+          <button
+            onClick={createPlaylist}
+            className="bg-white text-black font-bold py-2 px-10 border border-black rounded-full focus:outline-none focus:shadow-outline hover:bg-gray-100 w-full"
+          >
+            Create SoundMingle Playlist
+          </button>
             <SpotifyPlaylist />
           </div>
         </div>

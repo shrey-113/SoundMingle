@@ -26,14 +26,14 @@ function Group() {
     <div className="flex flex-col mt-10 w-full h-screen text-center">
       <div className="flex flex-row h-10 ml-auto mr-4">
         <button
-          className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2 flex items-center"
+          className="hover:bg-[#5c5c5c] text-white rounded-full px-4 py-2 text-lg mx-5 w-44 focus:outline-none focus:shadow-outline-blue border-white border-2 flex items-center"
           onClick={handleCreateRoomClick}
         >
           <FaPlus className="mr-2" />
           Create Room
         </button>
         <button
-          className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2 flex items-center"
+          className="hover:bg-[#5c5c5c] text-white rounded-full px-4 py-2 text-lg w-44 justify-center focus:outline-none focus:shadow-outline-blue border-white border-2 flex items-center"
           onClick={handleJoinRoomClick}
         >
           <FaDoorOpen className="mr-2" />
