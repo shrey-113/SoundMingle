@@ -16,7 +16,7 @@ function SidebarButton(props) {
         <div className={btnClass}>
             <IconContext.Provider value={{size: "30px", className: "btn-icon"}}>
             {props.icon}
-            <p className="btn-title">{props.title}</p>
+            <p className="btn-title text-white">{props.title}</p>
             </IconContext.Provider>
         </div>
         </Link>

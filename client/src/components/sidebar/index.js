@@ -28,10 +28,10 @@ function Sidebar() {
       </div>
 
       <div className="sidebar-buttons">
-        <SidebarButton title="Home" to="/home" icon={<AiFillHome />} />
-        <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill />} />
-        <SidebarButton title="Group" to="/group" icon={<IoIosPeople />} />
-        <SidebarButton title="About" to="/about" icon={<BsInfoCircleFill />} />
+        <SidebarButton title="Home" to="/home" icon={<AiFillHome color='white'/>} />
+        <SidebarButton title="Duo" to="/duo" icon={<BsFillPeopleFill color='white'/>} />
+        <SidebarButton title="Group" to="/group" icon={<IoIosPeople color='white'/>} />
+        <SidebarButton title="About" to="/about" icon={<BsInfoCircleFill color='white'/>} />
       </div>
 
       <div></div>

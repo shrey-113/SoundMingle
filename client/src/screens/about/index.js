@@ -7,8 +7,11 @@ import node from '../../assets/node.png'
 import tailwind from '../../assets/tailwind.png'
 import socket from '../../assets/socket.png'
 import express from '../../assets/express.png'
-import mongodb from '../../assets/mongodb.png'
+import postman from '../../assets/postman.png'
 import profile from '../../assets/profile.png'
+import json from '../../assets/json.png'
+
+
 
 const About = () => {
     return (

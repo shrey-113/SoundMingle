@@ -191,7 +191,7 @@ function Duo() {
                 handleClick();
               }
             }}
-            className="bg-blue-600 hover:bg-blue-400 text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
+            className=" hover:bg-[#5c5c5c] text-white rounded-full px-4 py-2 text-lg focus:outline-none focus:shadow-outline-blue border-white border-2"
           >
             Match
           </button>
