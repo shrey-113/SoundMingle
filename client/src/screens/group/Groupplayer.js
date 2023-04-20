@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import album from "../../assets/weeknd.jpg";
 import SpotifyPlayer from "react-spotify-web-playback";
 import Gchatbox from "../../components/Group/Gchat_box";
@@ -18,7 +18,7 @@ function Groupplayer() {
   // const grouparray=localStorage.getItem("GroupPlaylistarray")
   // const trackUris=grouparray
 
-  trackUris = ["spotify:track:2p8IUWQDrpjuFltbdgLOag"];
+  const trackUris = ["spotify:track:2p8IUWQDrpjuFltbdgLOag"];
 
   if (!token) return null;
 
@@ -53,12 +53,14 @@ function Groupplayer() {
         />
       </div>
       <div className="flex justify-center align-middle">
-        <button
-          id="user"
-          className="text-white bg-transparent border-2 rounded-full px-4 py-1 mx-2 whitespace-nowrap mt-4 border-white hover:bg-red-500"
-        >
-          Leave Group
-        </button>
+        <Link to={"/group"}>
+          <button
+            id="user"
+            className="text-white bg-transparent border-2 rounded-full px-4 py-1 mx-2 whitespace-nowrap mt-4 border-white hover:bg-red-500"
+          >
+            Leave Group
+          </button>
+        </Link>
       </div>
       <div className="absolute top-20 left-44 translate-x-[56rem]">
         <Gchatbox />

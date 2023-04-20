@@ -48,7 +48,6 @@ io.on("connection", (socket) => {
       if (room.user_1 && room.user_2) {
         room.isfull = true;
       }
-      console.log(room);
       socket.join(roomID);
       curRoomId = roomID;
       io.to(curRoomId).emit("roomsData", room);
@@ -62,7 +61,6 @@ io.on("connection", (socket) => {
     const a = await fsp.readFile(filePath, "utf8");
     const userData = JSON.parse(a);
     const rooms = userData.rooms;
-
     const room = rooms.find((r) => r.room_id === data.roomid);
 
     // if the room was found, update the value of skipped for the specified user
@@ -111,7 +109,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("joingroup", async (groupId, socketId, userdata) => {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
     const jsondata = await fsp.readFile("data/grouprooms.json", "utf8");
     const obj = await JSON.parse(jsondata);
     const group = obj.rooms.find((g) => g.group_id === parseInt(groupId));
