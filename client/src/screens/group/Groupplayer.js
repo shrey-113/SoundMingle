@@ -1,12 +1,26 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import album from "../../assets/weeknd.jpg";
 import SpotifyPlayer from "react-spotify-web-playback";
-import Chatbox from "../../components/Duo/chatbox";
+import Gchatbox from "../../components/Group/Gchat_box";
 import Playlist from "../../components/Group/Playlist";
-import { socket } from "./index";
+// import { socket } from "./index";
+import { useStateProvider } from "../../utils/StateProvider";
+// import { useState,useEffect } from "react";
 
 function Groupplayer() {
   const { groupId } = useParams();
+
+  const [{ token }] = useStateProvider();
+
+  // const userName = localStorage.getItem("userName");
+  // const SoundMingleId = localStorage.getItem("SoundMingleId");
+
+  // const grouparray=localStorage.getItem("GroupPlaylistarray")
+  // const trackUris=grouparray
+
+  const trackUris = ["spotify:track:2p8IUWQDrpjuFltbdgLOag"];
+
+  if (!token) return null;
 
   return (
     <div className="text-white flex flex-col items-center w-screen ">
@@ -26,24 +40,30 @@ function Groupplayer() {
       <h1 className="text-white text-center text-sm">Weeknd</h1>
       <div className="bg-gray-800 text-white p-2 mt-8">
         <SpotifyPlayer
+          token={token}
+          play="true"
+          uris={trackUris}
           styles={{
             sliderColor: "#1cb954",
             color: "white",
-            trackArtistColor: "#b3b3b3",
-            trackNameColor: "white",
+
+            trackArtistColor: "black",
+            trackNameColor: "black",
           }}
         />
       </div>
       <div className="flex justify-center align-middle">
-        <button
-          id="user"
-          className="text-white bg-transparent border-2 rounded-full px-4 py-1 mx-2 whitespace-nowrap mt-4 border-white hover:bg-red-500"
-        >
-          Leave Group
-        </button>
+        <Link to={"/group"}>
+          <button
+            id="user"
+            className="text-white bg-transparent border-2 rounded-full px-4 py-1 mx-2 whitespace-nowrap mt-4 border-white hover:bg-red-500"
+          >
+            Leave Group
+          </button>
+        </Link>
       </div>
       <div className="absolute top-20 left-44 translate-x-[56rem]">
-        <Chatbox />
+        <Gchatbox />
       </div>
 
       <div className="fixed left-32 top-20 ">

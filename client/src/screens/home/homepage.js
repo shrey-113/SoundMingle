@@ -105,7 +105,7 @@ function Homepage() {
   const [quote, setQuote] = useState("");
 
   const configuration = new Configuration({
-    apiKey: "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", //you api key here
+    apiKey: "", //you api key here
   });
 
   const openai = new OpenAIApi(configuration);

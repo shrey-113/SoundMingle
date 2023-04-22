@@ -100,16 +100,15 @@ const Playlist = () => {
       return;
     }
 
-    const newSongObj = {   
+    const newSongObj = {
       id: Uri,
       name: searchValue,
       imageUrl: imageUrl,
-      artistNames: artistNames, };
+      artistNames: artistNames,
+    };
     setSongs([...songs, newSongObj]);
     setNewSong("");
   };
-
-
 
   return (
     <div className="max-w-lg mx-auto w-96">
@@ -121,7 +120,6 @@ const Playlist = () => {
             className="px-4 py-2 flex justify-between items-center"
           >
             <span>{song.name}</span>
-
           </li>
         ))}
       </ul>
@@ -130,8 +128,6 @@ const Playlist = () => {
           className="flex-grow border rounded-l-lg px-4 py-2 mr-2 text-black"
           type="text"
           placeholder="Enter song name"
-
-
           value={searchValue}
           onChange={handleSearch}
         />
@@ -145,7 +141,7 @@ const Playlist = () => {
         </button>
       </div>
 
-      <div className="mt-4"  style={{ overflowY: "scroll", height: "200px"}}>
+      <div className="mt-4" style={{ overflowY: "scroll", height: "200px" }}>
         {searchValue !== "" &&
           searchResults.map((result, index) => (
             <SearchResultCard

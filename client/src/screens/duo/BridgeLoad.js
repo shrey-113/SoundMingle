@@ -25,7 +25,8 @@ function BridgeLoad(props) {
     socket.on("roomsData", (data) => {
       // setroomsdata(data)
       console.log(data);
-
+      const roomsroomid = data.room_id;
+      console.log(roomsroomid);
       const myUsername = localStorage.getItem("userName");
       const participants = [data.user_1, data.user_2];
       setroomstatus(!data.isfull);
@@ -45,8 +46,10 @@ function BridgeLoad(props) {
           setothersUri(participanttrackuri);
           setothersUsername(participantUsername);
           setothersProfileImage(participantprofileImage);
+          setroomsid(roomsroomid);
           setBothUsersConnected(true);
         }
+        console.log(othersartist, roomsid);
       });
 
       // socket.emit("deleteRoom", roomsid);

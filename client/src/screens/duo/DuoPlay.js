@@ -4,11 +4,9 @@ import { useStateProvider } from "../../utils/StateProvider";
 import { socket } from "./index";
 import axios from "axios";
 import Chatbox from "../../components/Duo/chatbox";
-import weeknd from "../../assets/taylor.jpeg"
+import weeknd from "../../assets/taylor.jpeg";
 
 function DuoPlay(props) {
-
-  
   const [{ token }] = useStateProvider();
   const [play, setPlay] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -40,6 +38,10 @@ function DuoPlay(props) {
 
     let playlistId = SoundMingleId; // replace with your playlist id
     let tracks = trackUris; // replace with the tracks you want to add
+    console.log(playlistId);
+    console.log(playlistId);
+    console.log(playlistId);
+    console.log(playlistId);
 
     let config = {
       method: "post",
@@ -133,11 +135,11 @@ function DuoPlay(props) {
         <h1 className="text-white text-center">{props.othersusername}</h1>
       </div>
       <div className="absolute top-32 left-80  translate-x-60">
-        <Chatbox currentUser={userName} recipientUser={props.othersusername}/>
+        <Chatbox currentUser={userName} recipientUser={props.othersusername} />
       </div>
       <div className="absolute top-32 right-80 transform translate-x-[-20rem]">
         <h1 className="text-white whitespace-nowrap">Your Recommendation</h1>
-        <img src={props.imageUrl} alt="anothereck" className="rounded-md"/>
+        <img src={props.imageUrl} alt="anothereck" className="rounded-md" />
       </div>
     </div>
   );

@@ -29,10 +29,13 @@ function SpotifyPlaylist() {
       }
     };
     getPlaylists();
-  }, [token]);
 
-  // console.log(Id)
+  }, [token]);
   localStorage.setItem("SoundMingleId", Id);
+
+  console.log(Id)
+
+  console.log(Id)
   return (
     <div
       dangerouslySetInnerHTML={{
