@@ -23,19 +23,18 @@ function SpotifyPlaylist() {
       for (let i = 0; i < playlists.length; i++) {
         if (playlists[i].name === "SoundMingle") {
           setId(playlists[i].id);
-       
+
           break;
         }
       }
     };
     getPlaylists();
-
   }, [token]);
   localStorage.setItem("SoundMingleId", Id);
 
-  console.log(Id)
+  console.log(Id);
 
-  console.log(Id)
+  console.log(Id);
   return (
     <div
       dangerouslySetInnerHTML={{
